@@ -385,16 +385,11 @@ extension PlayScene {
                 print("[StrokePath] (rebuild) kanji=\(kanji.char) stroke=\(index) minSegPx=\(String(format: "%.4f", minSeg))")
             }
             
-            // Background Node (Template - Gray) simple stroke
+            // Background Node (Template - Gray) filled outline to avoid seams
             // Always use white/gray for background - no debug coloring here
-            let bgShape = SKShapeNode(path: path)
+            let bgWidth = LayoutConstants.shared.kanjiBackgroundStrokeWidth
+            let bgShape = makeFilledStrokeNode(path: path, width: bgWidth, color: SKColor(white: 1.0, alpha: 0.35), alpha: 1.0, blend: .alpha, z: 0)
             bgShape.name = "stroke_bg_\(index)"
-            bgShape.strokeColor = SKColor(white: 1.0, alpha: 0.35)
-            bgShape.alpha = 1.0
-            bgShape.lineWidth = LayoutConstants.shared.kanjiBackgroundStrokeWidth
-            bgShape.lineCap = .round
-            bgShape.lineJoin = .round
-            bgShape.glowWidth = 0.0
             node.addChild(bgShape)
             
             // Fill Node - Use NeonStrokeFactory for seamless neon glow

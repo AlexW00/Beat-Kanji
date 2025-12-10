@@ -102,6 +102,7 @@ extension PlayScene {
         
         // Background Node (Faint full stroke) - for non-rainbow, or container for rainbow segments
         let bgShape = SKShapeNode()
+        bgShape.fillColor = .clear  // Explicitly clear to prevent white fill when path is set
         if !isRainbow {
             bgShape.strokeColor = strokeColor
             bgShape.lineWidth = LayoutConstants.shared.flyingStrokeBgWidth
@@ -199,10 +200,14 @@ extension PlayScene {
         let node = SKNode()
         node.alpha = 0.5 // Preview is semi-transparent
         
-        // Calculate scale and offset - same as current kanji (no horizontal offset)
-        let scale = min(size.width, size.height) * 0.8 // Same size as main kanji
+        // Calculate scale and offset - must match current kanji sizing including iPad mode
+        let isIPad = UIDevice.current.userInterfaceIdiom == .pad
+        let useApplePencilMode = isIPad && SettingsStore.shared.iPadInputMode == .applePencil
+        let scaleFactor: CGFloat = useApplePencilMode ? 0.45 : 0.8
+        let scale = min(size.width, size.height) * scaleFactor
         let offsetX = (size.width - scale) / 2 // Centered horizontally
-        let offsetY = size.height * 0.15 // Same vertical position as current kanji
+        let bottomOffset: CGFloat = useApplePencilMode ? 0.25 : 0.15
+        let offsetY = size.height * bottomOffset
         
         node.userData = ["scale": scale, "offsetX": offsetX, "offsetY": offsetY]
         node.position = CGPoint(x: offsetX, y: offsetY)
@@ -460,6 +465,7 @@ extension PlayScene {
                 
                 // Background stroke (no glowWidth)
                 flying.bgNode.path = fullPath
+                flying.bgNode.fillColor = .clear  // Ensure no fill shows through
                 flying.bgNode.lineWidth = bgWidth
                 flying.bgNode.glowWidth = 0
                 
