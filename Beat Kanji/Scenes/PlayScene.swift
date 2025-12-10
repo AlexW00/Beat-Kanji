@@ -287,10 +287,13 @@ class PlayScene: SKScene {
         
         currentStrokeNode = SKNode()
         
+        // Use device-appropriate stroke widths
+        let drawLayout = LayoutConstants.shared
+        
         // 1. Glow Node
         let glowNode = SKShapeNode()
         glowNode.strokeColor = .cyan
-        glowNode.lineWidth = 16
+        glowNode.lineWidth = drawLayout.drawingGlowWidth
         glowNode.lineCap = .round
         glowNode.glowWidth = 0.0
         glowNode.blendMode = .add
@@ -301,7 +304,7 @@ class PlayScene: SKScene {
         // 2. Core Node
         let coreNode = SKShapeNode()
         coreNode.strokeColor = .white
-        coreNode.lineWidth = 5
+        coreNode.lineWidth = drawLayout.drawingCoreWidth
         coreNode.lineCap = .round
         coreNode.glowWidth = 0.0
         coreNode.alpha = 1.0

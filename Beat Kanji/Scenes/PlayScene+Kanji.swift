@@ -310,18 +310,20 @@ extension PlayScene {
             
             // Background Node (Template - Gray) filled outline to avoid seams
             // Always use white/gray for background - no debug coloring here
-            let bgShape = makeFilledStrokeNode(path: path, width: 10, color: SKColor(white: 1.0, alpha: 0.35), alpha: 1.0, blend: .alpha, z: 0)
+            let bgWidth = LayoutConstants.shared.kanjiBackgroundStrokeWidth
+            let bgShape = makeFilledStrokeNode(path: path, width: bgWidth, color: SKColor(white: 1.0, alpha: 0.35), alpha: 1.0, blend: .alpha, z: 0)
             bgShape.name = "stroke_bg_\(index)"
             node.addChild(bgShape)
             
             // Fill Node (Animation/Completion) - Use NeonStrokeFactory for seamless neon glow
             // Muted neon effect: dark teal glow that blends with background
+            let layout = LayoutConstants.shared
             let neonStroke = NeonStrokeFactory.createNeonStroke(
                 path: path,
                 glowColor: SKColor(red: 0.1, green: 0.35, blue: 0.45, alpha: 1.0), // very muted teal
                 coreColor: SKColor(white: 0.85, alpha: 1.0), // softer white
-                glowWidth: 16.0,
-                coreWidth: 5.0,
+                glowWidth: layout.kanjiGlowWidth,
+                coreWidth: layout.kanjiCoreWidth,
                 glowAlpha: 0.6,
                 coreAlpha: 0.95,
                 blendMode: .alpha // use alpha instead of add for less brightness
@@ -389,7 +391,7 @@ extension PlayScene {
             bgShape.name = "stroke_bg_\(index)"
             bgShape.strokeColor = SKColor(white: 1.0, alpha: 0.35)
             bgShape.alpha = 1.0
-            bgShape.lineWidth = 8
+            bgShape.lineWidth = LayoutConstants.shared.kanjiBackgroundStrokeWidth
             bgShape.lineCap = .round
             bgShape.lineJoin = .round
             bgShape.glowWidth = 0.0
@@ -397,12 +399,13 @@ extension PlayScene {
             
             // Fill Node - Use NeonStrokeFactory for seamless neon glow
             // Muted neon effect: dark teal glow that blends with background
+            let rebuildLayout = LayoutConstants.shared
             let neonStroke = NeonStrokeFactory.createNeonStroke(
                 path: path,
                 glowColor: SKColor(red: 0.1, green: 0.35, blue: 0.45, alpha: 1.0), // very muted teal
                 coreColor: SKColor(white: 0.85, alpha: 1.0), // softer white
-                glowWidth: 14.0,
-                coreWidth: 4.0,
+                glowWidth: rebuildLayout.kanjiGlowWidth,
+                coreWidth: rebuildLayout.kanjiCoreWidth,
                 glowAlpha: 0.6,
                 coreAlpha: 0.95,
                 blendMode: .alpha // use alpha instead of add for less brightness

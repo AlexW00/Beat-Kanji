@@ -104,7 +104,7 @@ extension PlayScene {
         let bgShape = SKShapeNode()
         if !isRainbow {
             bgShape.strokeColor = strokeColor
-            bgShape.lineWidth = 8
+            bgShape.lineWidth = LayoutConstants.shared.flyingStrokeBgWidth
             bgShape.lineCap = .round
             bgShape.lineJoin = .round
         }
@@ -140,7 +140,7 @@ extension PlayScene {
                 let segmentBg = SKShapeNode()
                 segmentBg.name = "rainbowBg_\(idx)"
                 segmentBg.strokeColor = color
-                segmentBg.lineWidth = 8
+                segmentBg.lineWidth = LayoutConstants.shared.flyingStrokeBgWidth
                 segmentBg.lineCap = .round
                 segmentBg.lineJoin = .round
                 segmentBg.glowWidth = 0.0
@@ -404,9 +404,10 @@ extension PlayScene {
                 }
                 
                 let depthScale = 1.0 / (1.0 + flying.depth * perspectiveFactor)
-                let glowWidth = 14.0 * depthScale
-                let bgWidth = 8.0 * depthScale
-                let coreWidth = 4.0 * depthScale
+                let flyingLayout = LayoutConstants.shared
+                let glowWidth = flyingLayout.flyingStrokeGlowWidth * depthScale
+                let bgWidth = flyingLayout.flyingStrokeBgWidth * depthScale
+                let coreWidth = flyingLayout.flyingStrokeCoreWidth * depthScale
                 
                 // Create paths for each rainbow color segment
                 for colorIdx in 0..<numColors {
@@ -452,9 +453,10 @@ extension PlayScene {
             } else {
                 // Standard stroke - update paths with neon glow and filled core to avoid seams
                 let depthScale = 1.0 / (1.0 + flying.depth * perspectiveFactor)
-                let bgWidth = 8.0 * depthScale
-                let glowOuterWidth = 12.0 * depthScale
-                let coreWidth = 3.0 * depthScale
+                let stdLayout = LayoutConstants.shared
+                let bgWidth = stdLayout.flyingStrokeBgWidth * depthScale
+                let glowOuterWidth = stdLayout.flyingStrokeGlowOuterWidth * depthScale
+                let coreWidth = stdLayout.flyingStrokeStandardCoreWidth * depthScale
                 
                 // Background stroke (no glowWidth)
                 flying.bgNode.path = fullPath
