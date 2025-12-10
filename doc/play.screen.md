@@ -1,0 +1,6 @@
+- Screen: PlayScene (`Beat Kanji/Scenes/PlayScene*.swift`).
+- Responsibilities: drives GameEngine timing, renders kanji strokes, handles touch input, and triggers feedback/particles.
+- Visual pieces: gradient-like background + conveyor grid, HUD labels (score/lives), spark emitter following touch, flying stroke projection, kanji node with stroke templates/fills.
+- Timing: GameEngine provides `currentTime`, `strokeArrivalTimes`, and `flightDuration`; PlayScene spawns flying strokes ahead of arrival and advances when user completes or misses.
+- Input: touch begins path + spark, move extends path, end evaluates against current stroke; miss updates lives and feedback.
+- Transitions: kanji change uses pixel dissolve; game over presents GameOverScene and stops music.

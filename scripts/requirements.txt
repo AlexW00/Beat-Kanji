@@ -1,0 +1,22 @@
+# Beatmap Tools Requirements
+# Install with: pip install -r requirements.txt
+
+# Core audio processing
+librosa>=0.10.0
+numpy>=1.23.0,<2.0.0
+scipy>=1.10.0
+
+# Stem separation (Demucs - modern replacement for Spleeter)
+# Uses PyTorch instead of TensorFlow, better ARM64/Apple Silicon support
+demucs>=4.0.0
+torch>=2.0.0
+torchaudio>=2.0.0
+
+# Beatmap Editor UI
+dearpygui>=1.10.0
+pygame>=2.5.0
+
+# Note: FFmpeg must be installed separately
+# macOS: brew install ffmpeg
+# Linux: sudo apt-get install ffmpeg
+# Windows: Download from https://ffmpeg.org/

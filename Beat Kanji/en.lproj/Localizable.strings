@@ -1,0 +1,50 @@
+/* 
+  Localizable.strings (English)
+  Beat Kanji
+*/
+
+// Start Screen
+"start.title" = "Beat Kanji";
+"start.play" = "Play";
+"start.gallery" = "Kanji Gallery";
+"start.gallery.comingSoon" = "coming soon";
+"start.settings" = "Settings";
+
+// Settings Screen
+"settings.title" = "Settings";
+"settings.category.sound" = "Sound";
+"settings.music" = "Music";
+"settings.interface" = "Interface";
+"settings.category.display" = "Display";
+"settings.displayAfterKanji" = "Text displayed after Kanji";
+"settings.display.nothing" = "None";
+"settings.display.meaning" = "Meaning";
+"settings.category.about" = "About";
+"settings.github" = "GitHub";
+"settings.category.ipad" = "iPad";
+"settings.ipad.inputMode" = "Input Mode";
+"settings.ipad.default" = "Default";
+"settings.ipad.applePencil" = "Apple Pencil";
+
+// Credits Screen
+"credits.title" = "Credits";
+
+// Play Screen
+"play.tooearly" = "Too early!";
+
+// Game Over Screen
+"gameover.playagain" = "Play Again";
+"gameover.back" = "Back";
+
+// Tutorial Screen
+"tutorial.basics.title" = "Tutorial: Basics";
+"tutorial.basics.body" = "Kanji appear as the music plays.";
+"tutorial.strokes.title" = "Tutorial: Strokes";
+"tutorial.strokes.body" = "Strokes fly toward you. When a stroke turns blue, swipe to draw it.";
+"tutorial.hearts.title" = "Tutorial: Hearts";
+"tutorial.hearts.body" = "Missing a stroke costs a heart.";
+"tutorial.rainbow.title" = "Tutorial: Rainbow";
+"tutorial.rainbow.body" = "A rainbow stroke can restore a heart when swiped perfectly.";
+"tutorial.score.title" = "Tutorial: Score";
+"tutorial.score.body" = "At the end of a level, you receive a score from S to D.";
+"tutorial.letsgo" = "Let's Go!";

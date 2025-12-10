@@ -1,0 +1,15 @@
+# Generated kanji data (regenerate with: ./scripts/generate_kanji.sh)
+Beat Kanji/Resources/Data/kanji.sqlite
+
+.conductor
+build/
+DerivedData/
+*.xcuserstate
+**/xcuserdata/
+.DS_Store
+scripts/.venv
+.env
+*.sqlite
+
+res/kanji-extracted.json
+res/kanji-tagged.json

@@ -1,0 +1,50 @@
+/* 
+  Localizable.strings (Japanese)
+  Beat Kanji
+*/
+
+// Start Screen
+"start.title" = "Beat Kanji";
+"start.play" = "プレイ";
+"start.gallery" = "漢字ギャラリー";
+"start.gallery.comingSoon" = "近日公開";
+"start.settings" = "設定";
+
+// Settings Screen
+"settings.title" = "設定";
+"settings.category.sound" = "サウンド";
+"settings.music" = "音楽";
+"settings.interface" = "インターフェース";
+"settings.category.display" = "表示";
+"settings.displayAfterKanji" = "漢字の後に表示するテキスト";
+"settings.display.nothing" = "なし";
+"settings.display.meaning" = "意味";
+"settings.category.about" = "このアプリについて";
+"settings.github" = "GitHub";
+"settings.category.ipad" = "iPad";
+"settings.ipad.inputMode" = "入力モード";
+"settings.ipad.default" = "デフォルト";
+"settings.ipad.applePencil" = "Apple Pencil";
+
+// Credits Screen
+"credits.title" = "クレジット";
+
+// Play Screen
+"play.tooearly" = "早すぎる!";
+
+// Game Over Screen
+"gameover.playagain" = "もう一度";
+"gameover.back" = "戻る";
+
+// Tutorial Screen
+"tutorial.basics.title" = "ガイド: 基本";
+"tutorial.basics.body" = "音楽に合わせて漢字が現れます。";
+"tutorial.strokes.title" = "ガイド: 画";
+"tutorial.strokes.body" = "画が飛んでくるので、青く光ったらスワイプしてなぞります。";
+"tutorial.hearts.title" = "ガイド: ハート";
+"tutorial.hearts.body" = "画を逃すとハートを失います。";
+"tutorial.rainbow.title" = "ガイド: 虹";
+"tutorial.rainbow.body" = "レインボー画を完璧に描くとハートが1つ戻ります。";
+"tutorial.score.title" = "ガイド: スコア";
+"tutorial.score.body" = "レベルの最後に S〜D の評価を受け取ります。";
+"tutorial.letsgo" = "スタート!";

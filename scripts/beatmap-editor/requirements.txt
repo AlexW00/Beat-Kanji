@@ -1,0 +1,22 @@
+# Beatmap Editor Requirements
+# Install with: pip install -r requirements.txt
+
+# UI Framework
+dearpygui>=1.10.0
+
+# Audio Playback
+pydub>=0.25.0
+simpleaudio>=1.0.4
+
+# Core audio processing (shared with generator)
+librosa>=0.10.0
+numpy>=1.23.0,<2.0.0
+scipy>=1.10.0
+
+# Stem separation
+demucs>=4.0.0
+torch>=2.0.0
+torchaudio>=2.0.0
+
+# Note: FFmpeg must be installed separately
+# macOS: brew install ffmpeg

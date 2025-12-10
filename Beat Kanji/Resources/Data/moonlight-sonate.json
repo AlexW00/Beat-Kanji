@@ -1,0 +1,1658 @@
+{
+  "meta": {
+    "version": "1.1",
+    "filename": "moonlight-sonate.mp3",
+    "title": "Moonlight Sonata",
+    "category": "Classical Remix #1",
+    "priority": 100,
+    "bpm": 75.0,
+    "total_duration": 233.7
+  },
+  "notes": [
+    {
+      "time": 0,
+      "level": 3,
+      "type": "bass"
+    },
+    {
+      "time": 0.4,
+      "level": 3,
+      "type": "bass"
+    },
+    {
+      "time": 0.8,
+      "level": 1,
+      "type": "bass"
+    },
+    {
+      "time": 1.4,
+      "level": 2,
+      "type": "bass"
+    },
+    {
+      "time": 2.0,
+      "level": 1,
+      "type": "bass"
+    },
+    {
+      "time": 2.6,
+      "level": 2,
+      "type": "bass"
+    },
+    {
+      "time": 3.2,
+      "level": 1,
+      "type": "bass"
+    },
+    {
+      "time": 4.0,
+      "level": 1,
+      "type": "bass"
+    },
+    {
+      "time": 6.4,
+      "level": 3,
+      "type": "bass"
+    },
+    {
+      "time": 6.8,
+      "level": 3,
+      "type": "bass"
+    },
+    {
+      "time": 7.2,
+      "level": 1,
+      "type": "bass"
+    },
+    {
+      "time": 7.8,
+      "level": 2,
+      "type": "bass"
+    },
+    {
+      "time": 8.4,
+      "level": 1,
+      "type": "bass"
+    },
+    {
+      "time": 9.0,
+      "level": 2,
+      "type": "bass"
+    },
+    {
+      "time": 9.6,
+      "level": 1,
+      "type": "bass"
+    },
+    {
+      "time": 9.9,
+      "level": 2,
+      "type": "bass"
+    },
+    {
+      "time": 10.4,
+      "level": 1,
+      "type": "bass"
+    },
+    {
+      "time": 12.6,
+      "level": 3,
+      "type": "lead"
+    },
+    {
+      "time": 12.8,
+      "level": 3,
+      "type": "lead"
+    },
+    {
+      "time": 13.2,
+      "level": 3,
+      "type": "lead"
+    },
+    {
+      "time": 13.6,
+      "level": 1,
+      "type": "bass"
+    },
+    {
+      "time": 16.0,
+      "level": 1,
+      "type": "bass"
+    },
+    {
+      "time": 16.7,
+      "level": 1,
+      "type": "bass"
+    },
+    {
+      "time": 19.0,
+      "level": 1,
+      "type": "bass"
+    },
+    {
+      "time": 19.8,
+      "level": 1,
+      "type": "bass"
+    },
+    {
+      "time": 21.4,
+      "level": 1,
+      "type": "bass"
+    },
+    {
+      "time": 23.0,
+      "level": 1,
+      "type": "bass"
+    },
+    {
+      "time": 25.6,
+      "level": 1,
+      "type": "bass"
+    },
+    {
+      "time": 26.2,
+      "level": 2,
+      "type": "bass"
+    },
+    {
+      "time": 26.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 27.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 28.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 29.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 30.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 30.8,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 31.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 32.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 33.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 34.0,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 34.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 35.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 36.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 37.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 38.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 38.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 39.2,
+      "level": 3,
+      "type": "bass"
+    },
+    {
+      "time": 39.6,
+      "level": 3,
+      "type": "bass"
+    },
+    {
+      "time": 40.0,
+      "level": 3,
+      "type": "bass"
+    },
+    {
+      "time": 40.3,
+      "level": 3,
+      "type": "bass"
+    },
+    {
+      "time": 40.6,
+      "level": 3,
+      "type": "bass"
+    },
+    {
+      "time": 40.9,
+      "level": 3,
+      "type": "bass"
+    },
+    {
+      "time": 41.2,
+      "level": 3,
+      "type": "bass"
+    },
+    {
+      "time": 42.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 43.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 44.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 45.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 46.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 46.8,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 47.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 48.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 49.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 50.0,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 50.4,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 50.9,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 51.25,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 51.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 52.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 55.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 58.0,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 58.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 59.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 61.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 64.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 65.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 66.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 67.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 68.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 68.4,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 68.8,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 69.2,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 69.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 70.0,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 70.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 70.8,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 71.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 71.6,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 72.0,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 72.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 74.0,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 74.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 74.8,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 75.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 75.6,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 76.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 76.4,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 76.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 77.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 77.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 78.0,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 78.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 78.8,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 79.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 79.6,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 80.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 80.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 80.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 81.2,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 81.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 82.0,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 82.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 82.8,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 83.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 83.6,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 84.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 84.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 84.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 85.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 85.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 86.0,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 86.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 86.8,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 87.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 87.6,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 88.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 88.4,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 88.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 89.2,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 89.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 90.0,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 90.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 90.8,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 91.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 91.6,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 92.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 92.4,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 92.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 93.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 93.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 94.0,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 94.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 94.8,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 95.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 95.6,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 96.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 96.4,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 96.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 97.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 97.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 98.0,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 98.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 98.8,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 99.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 99.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 100.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 100.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 101.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 102.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 103.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 104.0,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 104.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 105.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 106.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 107.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 108.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 108.8,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 109.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 110.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 111.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 112.0,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 112.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 113.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 114.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 115.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 116.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 116.8,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 117.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 118.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 119.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 120.0,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 120.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 121.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 122.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 123.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 124.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 124.8,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 125.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 126.3,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 126.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 128.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 128.4,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 128.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 131.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 132.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 132.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 133.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 134.2,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 134.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 135.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 136.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 136.8,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 137.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 137.6,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 138.05,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 138.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 139.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 140.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 141.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 142.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 142.8,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 143.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 144.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 145.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 146.0,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 146.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 147.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 148.4,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 148.8,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 149.2,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 149.6,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 150.0,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 150.4,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 150.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 151.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 152.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 152.8,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 153.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 154.4,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 155.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 156.0,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 156.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 157.6,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 158.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 159.2,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 160.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 160.8,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 161.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 162.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 163.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 164.0,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 164.4,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 164.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 165.2,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 165.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 166.0,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 166.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 166.8,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 167.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 167.6,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 168.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 168.4,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 168.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 169.2,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 169.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 170.0,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 170.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 171.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 172.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 173.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 173.4,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 173.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 174.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 175.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 176.0,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 176.4,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 176.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 177.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 178.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 179.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 179.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 180.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 180.8,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 181.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 182.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 183.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 183.65,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 184.0,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 184.4,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 184.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 185.15,
+      "level": 3,
+      "type": "drum"
+    },
+    {
+      "time": 185.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 185.9,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 186.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 187.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 188.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 188.8,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 189.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 190.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 191.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 192.0,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 192.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 192.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 193.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 194.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 195.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 196.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 196.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 196.8,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 197.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 197.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 198.0,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 198.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 199.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 200.0,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 200.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 201.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 202.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 203.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 204.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 204.8,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 205.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 206.4,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 207.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 208.0,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 208.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 209.6,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 210.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 211.2,
+      "level": 2,
+      "type": "drum"
+    },
+    {
+      "time": 212.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 214.2,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 215.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 217.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 218.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 219.8,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 221.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 224.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 226.4,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 228.0,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 229.6,
+      "level": 1,
+      "type": "drum"
+    },
+    {
+      "time": 231.2,
+      "level": 1,
+      "type": "drum"
+    }
+  ]
+}

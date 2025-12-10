@@ -1,0 +1,828 @@
+{
+	"meta": {
+		"version": "1.1",
+		"filename": "clair-de-lune.mp3",
+		"title": "Clair de Lune",
+		"priority": 0,
+		"category": "Classical Remix #1",
+		"bpm": 75.0,
+		"total_duration": 122.0
+	},
+	"notes": [
+		{
+			"time": 0.8,
+			"level": 1,
+			"type": "lead"
+		},
+		{
+			"time": 2.5,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 2.9,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 3.1,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 4.0,
+			"level": 1,
+			"type": "lead"
+		},
+		{
+			"time": 7.2,
+			"level": 1,
+			"type": "lead"
+		},
+		{
+			"time": 8.6,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 8.95,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 9.15,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 9.35,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 10.4,
+			"level": 1,
+			"type": "lead"
+		},
+		{
+			"time": 12.1,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 12.5,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 12.7,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 13.0,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 13.6,
+			"level": 1,
+			"type": "lead"
+		},
+		{
+			"time": 16.8,
+			"level": 1,
+			"type": "lead"
+		},
+		{
+			"time": 20.0,
+			"level": 1,
+			"type": "lead"
+		},
+		{
+			"time": 21.55,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 23.2,
+			"level": 1,
+			"type": "lead"
+		},
+		{
+			"time": 23.8,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 24.4,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 24.6,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 24.8,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 25.95,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 26.15,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 26.4,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 27.2,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 27.8,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 28.4,
+			"level": 2,
+			"type": "drum"
+		},
+		{
+			"time": 28.8,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 29.0,
+			"level": 3,
+			"type": "drum"
+		},
+		{
+			"time": 29.6,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 30.2,
+			"level": 3,
+			"type": "drum"
+		},
+		{
+			"time": 30.4,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 30.8,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 31.6,
+			"level": 2,
+			"type": "drum"
+		},
+		{
+			"time": 32.0,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 32.2,
+			"level": 3,
+			"type": "drum"
+		},
+		{
+			"time": 32.8,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 33.6,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 34.2,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 34.8,
+			"level": 2,
+			"type": "drum"
+		},
+		{
+			"time": 35.2,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 35.4,
+			"level": 3,
+			"type": "drum"
+		},
+		{
+			"time": 36.0,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 36.6,
+			"level": 3,
+			"type": "drum"
+		},
+		{
+			"time": 36.8,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 37.2,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 38.0,
+			"level": 2,
+			"type": "drum"
+		},
+		{
+			"time": 38.4,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 38.6,
+			"level": 3,
+			"type": "drum"
+		},
+		{
+			"time": 39.2,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 40.0,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 40.6,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 41.2,
+			"level": 2,
+			"type": "drum"
+		},
+		{
+			"time": 41.6,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 41.8,
+			"level": 3,
+			"type": "drum"
+		},
+		{
+			"time": 42.4,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 43.0,
+			"level": 3,
+			"type": "drum"
+		},
+		{
+			"time": 43.2,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 43.6,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 44.4,
+			"level": 2,
+			"type": "drum"
+		},
+		{
+			"time": 44.8,
+			"level": 1,
+			"type": "drum"
+		},
+		{
+			"time": 45.0,
+			"level": 3,
+			"type": "drum"
+		},
+		{
+			"time": 45.6,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 45.9,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 46.2,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 46.8,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 47.6,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 47.9,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 48.8,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 52.0,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 52.6,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 53.15,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 53.8,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 54.4,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 55.2,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 55.6,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 56.0,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 56.4,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 58.4,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 59.0,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 59.6,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 60.8,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 61.1,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 61.4,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 61.6,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 64.8,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 65.6,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 66.2,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 66.8,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 67.2,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 68.0,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 68.8,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 69.4,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 70.0,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 70.4,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 70.55,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 71.2,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 72.0,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 72.6,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 73.2,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 73.6,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 74.4,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 75.2,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 75.8,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 76.4,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 76.8,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 77.0,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 77.6,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 78.4,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 79.2,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 80.0,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 80.8,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 81.6,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 82.4,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 83.2,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 84.0,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 84.8,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 85.6,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 86.4,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 87.2,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 88.0,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 88.8,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 89.6,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 89.9,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 90.1,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 90.4,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 93.6,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 96.8,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 97.8,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 98.2,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 100.0,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 101.15,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 103.2,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 104.4,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 104.8,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 105.1,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 105.4,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 106.4,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 107.0,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 107.2,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 107.6,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 108.2,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 108.4,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 108.8,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 109.0,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 109.6,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 110.2,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 110.4,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 110.8,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 111.2,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 111.4,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 111.6,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 112.0,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 112.2,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 112.8,
+			"level": 1,
+			"type": "base"
+		},
+		{
+			"time": 113.4,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 113.6,
+			"level": 3,
+			"type": "base"
+		},
+		{
+			"time": 114.4,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 115.2,
+			"level": 2,
+			"type": "base"
+		},
+		{
+			"time": 116.0,
+			"level": 1,
+			"type": "base"
+		}
+	]
+}

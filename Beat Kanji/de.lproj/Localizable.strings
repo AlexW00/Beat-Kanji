@@ -1,0 +1,50 @@
+/* 
+  Localizable.strings (German)
+  Beat Kanji
+*/
+
+// Start Screen
+"start.title" = "Beat Kanji";
+"start.play" = "Spielen";
+"start.gallery" = "Kanji-Galerie";
+"start.gallery.comingSoon" = "demnächst";
+"start.settings" = "Einstellungen";
+
+// Settings Screen
+"settings.title" = "Einstellungen";
+"settings.category.sound" = "Sound";
+"settings.music" = "Musik";
+"settings.interface" = "Oberfläche";
+"settings.category.display" = "Anzeige";
+"settings.displayAfterKanji" = "Angezeigter Text nach Kanji";
+"settings.display.nothing" = "Nichts";
+"settings.display.meaning" = "Bedeutung";
+"settings.category.about" = "Über";
+"settings.github" = "GitHub";
+"settings.category.ipad" = "iPad";
+"settings.ipad.inputMode" = "Eingabemodus";
+"settings.ipad.default" = "Standard";
+"settings.ipad.applePencil" = "Apple Pencil";
+
+// Credits Screen
+"credits.title" = "Credits";
+
+// Play Screen
+"play.tooearly" = "Zu früh!";
+
+// Game Over Screen
+"gameover.playagain" = "Nochmal";
+"gameover.back" = "Zurück";
+
+// Tutorial Screen
+"tutorial.basics.title" = "Tutorial: Grundlagen";
+"tutorial.basics.body" = "Kanji erscheinen im Takt der Musik.";
+"tutorial.strokes.title" = "Tutorial: Striche";
+"tutorial.strokes.body" = "Striche fliegen auf dich zu. Sobald ein Kanji-Strich blau leuchtet, wische ihn nach.";
+"tutorial.hearts.title" = "Tutorial: Herzen";
+"tutorial.hearts.body" = "Ein verpasster Strich kostet ein Herz.";
+"tutorial.rainbow.title" = "Tutorial: Regenbogen";
+"tutorial.rainbow.body" = "Wenn du einen Regenbogen-Strich perfekt nachwischt, stellst du ein Herz wieder her.";
+"tutorial.score.title" = "Tutorial: Punkte";
+"tutorial.score.body" = "Am Ende eines Levels erhältst du eine Bewertung von S bis D.";
+"tutorial.letsgo" = "Los geht's!";
