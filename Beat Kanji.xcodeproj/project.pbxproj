@@ -268,6 +268,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Beat Kanji";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.word-games";
 				INFOPLIST_KEY_UIAppFonts = "(NotoSansJP-Bold.ttf, NotoSansJP-SemiBold.ttf, NotoSansJP-Regular.ttf)";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -309,6 +310,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Beat Kanji";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.word-games";
 				INFOPLIST_KEY_UIAppFonts = "(NotoSansJP-Bold.ttf, NotoSansJP-SemiBold.ttf, NotoSansJP-Regular.ttf)";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
