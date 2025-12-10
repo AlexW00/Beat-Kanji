@@ -134,6 +134,9 @@ class GameEngine {
         currentKanjiIndexInSequence = 0
         currentBeatEventIndex = 0
         
+        // Preload all stroke data for selected kanji to avoid SQLite blocking during gameplay
+        KanjiDataLoader.shared.preloadStrokes(for: selectedKanjiSequence)
+        
         // Load the first kanji
         loadNextKanjiFromSequence()
     }
