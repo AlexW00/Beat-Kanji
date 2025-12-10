@@ -16,6 +16,15 @@ Beat Kanji let's you practice Japanese kanji to the beat - simply pick a song an
 
 and, most importantly: **NO ads!**
 
+## Screenshots
+
+<p align="center">
+  <img src="doc/screenshot-start.jpeg" width="24%" />
+  <img src="doc/screenshot-songs.jpeg" width="24%" />
+  <img src="doc/screenshot-details.jpeg" width="24%" />
+  <img src="doc/screenshot-level.jpeg" width="24%" />
+</p>
+
 ## Technical Details
 
 For setup instructions, project structure, and credits, please see [Technical Details](doc/technical_details.md).
