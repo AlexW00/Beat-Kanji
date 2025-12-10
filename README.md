@@ -6,6 +6,8 @@
 
 Beat Kanji let's you practice Japanese kanji to the beat - simply pick a song and start swiping strokes!
 
+Available on the App Store (SOON) for iPhone and iPad.
+
 ## Features
 
 - over 2000 kanji, ranging from N5-N1
