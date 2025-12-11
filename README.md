@@ -18,14 +18,18 @@ Available on the App Store (SOON) for iPhone and iPad.
 
 and, most importantly: **NO ads!**
 
-## Screenshots
+## Screenshots / Gameplay
 
-<p align="center">
-  <img src="doc/screenshot-start.jpeg" width="24%" />
-  <img src="doc/screenshot-songs.jpeg" width="24%" />
-  <img src="doc/screenshot-details.jpeg" width="24%" />
-  <img src="doc/screenshot-level.jpeg" width="24%" />
-</p>
+<table border="0">
+  <tr>
+    <td width="24%"><img src="doc/screenshot-start.jpeg" ...></td>
+    <td width="24%"><img src="doc/screenshot-songs.jpeg" ...></td>
+    <td width="24%"><img src="doc/screenshot-details.jpeg" ...></td>
+    <td width="24%">
+      <video src="https://github.com/user-attachments/assets/afcb8c9b-f8c6-4f81-9dd6-3ce330f48e05" controls="controls" style="max-width: 100%; display: block;"></video>
+    </td>
+  </tr>
+</table>
 
 ## Technical Details
 
