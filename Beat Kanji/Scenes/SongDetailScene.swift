@@ -319,13 +319,15 @@ class SongDetailScene: SKScene {
         
         let scoreText: String
         if let percentage = displayPercentage {
-            scoreText = "(\(Int(round(percentage)))%)"
+            // Use rounded percentage so tier matches the displayed value
+            let roundedPercentage = round(percentage)
+            scoreText = "(\(Int(roundedPercentage))%)"
             
             // Update tier icon
             #if DEBUG
-            let tier = displayTier ?? TierRank.from(percentage: percentage)
+            let tier = displayTier ?? TierRank.from(percentage: roundedPercentage)
             #else
-            let tier = TierRank.from(percentage: percentage)
+            let tier = TierRank.from(percentage: roundedPercentage)
             #endif
             
             if let icon = tierIcon {

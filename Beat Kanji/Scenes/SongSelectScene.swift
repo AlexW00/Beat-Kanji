@@ -344,9 +344,9 @@ class SongSelectScene: SKScene {
                 songContainer.addChild(songLabel)
                 
                 #if DEBUG
-                let tier = debugTierOverride ?? scorePercentage(for: song, in: pack).map { TierRank.from(percentage: $0) }
+                let tier = debugTierOverride ?? scorePercentage(for: song, in: pack).map { TierRank.from(percentage: round($0)) }
                 #else
-                let tier = scorePercentage(for: song, in: pack).map { TierRank.from(percentage: $0) }
+                let tier = scorePercentage(for: song, in: pack).map { TierRank.from(percentage: round($0)) }
                 #endif
                 if let tier = tier {
                     let tierIconSize: CGFloat = 40 * layout.scaleFactor

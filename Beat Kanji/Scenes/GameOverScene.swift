@@ -338,12 +338,14 @@ class GameOverScene: SKScene {
         }
         
         // Determine which tier to display
+        // Use rounded percentage so tier matches the displayed value (e.g., 89.5% displays as 90% and gets S tier)
+        let roundedPercentage = round(percentage)
         #if DEBUG
-        let displayTier = debugTierOverride ?? TierRank.from(percentage: percentage)
-        let displayPercentage = debugTierOverride != nil ? 95.0 : percentage
+        let displayTier = debugTierOverride ?? TierRank.from(percentage: roundedPercentage)
+        let displayPercentage = debugTierOverride != nil ? 95.0 : roundedPercentage
         #else
-        let displayTier = TierRank.from(percentage: percentage)
-        let displayPercentage = percentage
+        let displayTier = TierRank.from(percentage: roundedPercentage)
+        let displayPercentage = roundedPercentage
         #endif
         
         // Tier icon (larger size)
