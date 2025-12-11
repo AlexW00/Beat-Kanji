@@ -224,7 +224,7 @@ class SongDetailScene: SKScene {
         }
         
         kanjiList = CheckboxListComponent(
-            title: "Kanji",
+            title: NSLocalizedString("songDetail.kanji", comment: "Kanji category title"),
             items: kanjiItems,
             width: menuW,
             useSmallBackground: false,
@@ -249,7 +249,7 @@ class SongDetailScene: SKScene {
         }
         
         kanaList = CheckboxListComponent(
-            title: "Kana",
+            title: NSLocalizedString("songDetail.kana", comment: "Kana category title"),
             items: kanaItems,
             width: menuW,
             useSmallBackground: true,
@@ -284,7 +284,7 @@ class SongDetailScene: SKScene {
         playButtonBg = buttonBg
         
         let label = SKLabelNode(fontNamed: FontConfig.bold)
-        label.text = "Play"
+        label.text = NSLocalizedString("songDetail.play", comment: "Play button")
         label.fontSize = layout.headerFontSize + 4
         label.fontColor = .white
         label.verticalAlignmentMode = .center

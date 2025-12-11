@@ -10,6 +10,23 @@
 "start.gallery.comingSoon" = "近日公開";
 "start.settings" = "設定";
 
+// Song Select Screen
+"songSelect.title" = "曲";
+
+// Song Detail Screen
+"songDetail.play" = "プレイ";
+"songDetail.kana" = "かな";
+"songDetail.kanji" = "漢字";
+
+// Difficulty
+"difficulty.easy" = "簡単";
+"difficulty.medium" = "普通";
+"difficulty.hard" = "難しい";
+
+// Pause Screen
+"pause.resume" = "再開";
+"pause.exit" = "終了";
+
 // Settings Screen
 "settings.title" = "設定";
 "settings.category.sound" = "サウンド";
@@ -18,7 +35,7 @@
 "settings.category.display" = "表示";
 "settings.displayAfterKanji" = "漢字の後に表示するテキスト";
 "settings.display.nothing" = "なし";
-"settings.display.meaning" = "意味";
+"settings.display.meaning" = "意味 (英語)";
 "settings.category.about" = "このアプリについて";
 "settings.github" = "GitHub";
 "settings.category.ipad" = "iPad";

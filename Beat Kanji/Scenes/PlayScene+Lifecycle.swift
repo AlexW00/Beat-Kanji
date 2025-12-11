@@ -247,11 +247,11 @@ extension PlayScene {
         addChild(menu)
         pauseMenuNode = menu
         
-        let resumeButton = createMenuButton(text: "Resume", name: "resumeButton")
+        let resumeButton = createMenuButton(text: NSLocalizedString("pause.resume", comment: "Resume game"), name: "resumeButton")
         resumeButton.position = CGPoint(x: 0, y: 20)
         menu.addChild(resumeButton)
         
-        let exitButton = createMenuButton(text: "Exit", name: "exitButton")
+        let exitButton = createMenuButton(text: NSLocalizedString("pause.exit", comment: "Exit game"), name: "exitButton")
         exitButton.position = CGPoint(x: 0, y: -60)
         menu.addChild(exitButton)
     }

@@ -16,9 +16,9 @@ enum DifficultyLevel: Int, CaseIterable {
     
     var displayName: String {
         switch self {
-        case .easy: return "Easy"
-        case .medium: return "Medium"
-        case .hard: return "Hard"
+        case .easy: return NSLocalizedString("difficulty.easy", comment: "Easy difficulty")
+        case .medium: return NSLocalizedString("difficulty.medium", comment: "Medium difficulty")
+        case .hard: return NSLocalizedString("difficulty.hard", comment: "Hard difficulty")
         }
     }
     

@@ -10,6 +10,23 @@
 "start.gallery.comingSoon" = "coming soon";
 "start.settings" = "Settings";
 
+// Song Select Screen
+"songSelect.title" = "Songs";
+
+// Song Detail Screen
+"songDetail.play" = "Play";
+"songDetail.kana" = "Kana";
+"songDetail.kanji" = "Kanji";
+
+// Difficulty
+"difficulty.easy" = "Easy";
+"difficulty.medium" = "Medium";
+"difficulty.hard" = "Hard";
+
+// Pause Screen
+"pause.resume" = "Resume";
+"pause.exit" = "Exit";
+
 // Settings Screen
 "settings.title" = "Settings";
 "settings.category.sound" = "Sound";

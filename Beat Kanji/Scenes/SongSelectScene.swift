@@ -191,7 +191,7 @@ class SongSelectScene: SKScene {
         
         // Title label (centered)
         let titleLabel = SKLabelNode(fontNamed: FontConfig.bold)
-        titleLabel.text = "Songs"
+        titleLabel.text = NSLocalizedString("songSelect.title", comment: "Song select screen title")
         titleLabel.fontSize = layout.titleFontSize
         titleLabel.fontColor = .white
         titleLabel.verticalAlignmentMode = .center
