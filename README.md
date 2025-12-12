@@ -6,7 +6,7 @@
 
 Beat Kanji let's you practice Japanese kanji to the beat - simply pick a song and start swiping strokes!
 
-Available on the [App Store]([url](https://apps.apple.com/lv/app/beat-kanji/id6756133868)) for iPhone and iPad.
+Available on the [App Store](https://apps.apple.com/lv/app/beat-kanji/id6756133868) for iPhone and iPad.
 
 ## Features
 
