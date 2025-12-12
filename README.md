@@ -18,18 +18,9 @@ Available on the [App Store](https://apps.apple.com/lv/app/beat-kanji/id67561338
 
 and, most importantly: **NO ads!**
 
-## Screenshots / Gameplay
+## Gameplay (iPad)
 
-<table border="0">
-  <tr>
-    <td width="24%"><img src="doc/screenshot-start.jpeg" ...></td>
-    <td width="24%"><img src="doc/screenshot-songs.jpeg" ...></td>
-    <td width="24%"><img src="doc/screenshot-details.jpeg" ...></td>
-    <td width="24%">
-      <video src="https://github.com/user-attachments/assets/afcb8c9b-f8c6-4f81-9dd6-3ce330f48e05" controls="controls" style="max-width: 100%; display: block;"></video>
-    </td>
-  </tr>
-</table>
+https://github.com/user-attachments/assets/2303c2f8-0382-4ed7-a919-a9122ee6db48
 
 ## Technical Details
 
