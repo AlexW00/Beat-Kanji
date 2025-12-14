@@ -672,15 +672,6 @@ class PlayScene: SKScene {
         #endif
     }
     
-    // MARK: - iPad Mode Switcher
-    
-    func rebuildKanjiForModeChange() {
-        // Rebuild the current kanji with new size without resetting game state
-        if gameEngine.currentKanji != nil {
-            rebuildCurrentKanjiNode()
-        }
-    }
-    
     func finalizeCurrentKanjiScore() {
         guard let kanji = gameEngine.currentKanji else { return }
         let totalScore = kanji.strokes.enumerated().reduce(0) { partial, item in

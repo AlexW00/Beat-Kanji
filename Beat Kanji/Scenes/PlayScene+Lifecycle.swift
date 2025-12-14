@@ -97,9 +97,8 @@ extension PlayScene {
             // Pin near the top-left corner on iPad for quick access
             modeSwitcher.position = CGPoint(x: 110, y: size.height - 70)
             modeSwitcher.zPosition = 2
-            modeSwitcher.onChange = { [weak self] (newMode: iPadInputMode) in
+            modeSwitcher.onChange = { (newMode: iPadInputMode) in
                 SettingsStore.shared.iPadInputMode = newMode
-                self?.rebuildKanjiForModeChange()
             }
             hudLayer.addChild(modeSwitcher)
             modeSwitcherControl = modeSwitcher
