@@ -35,11 +35,12 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # Stroke length classification thresholds (based on percentile analysis)
 # S: <0.35 (~55th percentile) - no extra time
 # M: 0.35-0.55 (~55-80th percentile) - small bonus
-# L: 0.55-0.80 (~80-92nd percentile) - medium bonus  
+# L: 0.55-0.80 (~80-92nd percentile) - medium bonus
 # XL: >0.80 (~92nd+ percentile) - large bonus
 LENGTH_THRESHOLD_M = 0.35
 LENGTH_THRESHOLD_L = 0.55
 LENGTH_THRESHOLD_XL = 0.80
+
 
 def classify_stroke_length(length: float) -> str:
     """Classify stroke length into S/M/L/XL categories."""
@@ -222,7 +223,14 @@ def write_sqlite(entries: List[dict], out_path: Path, verbose: bool) -> None:
             length_class = classify_stroke_length(stroke_length)
             blob = pack_points(points)
             stroke_rows.append(
-                (kanji_id, idx, stroke_id, sqlite3.Binary(blob), stroke_length, length_class)
+                (
+                    kanji_id,
+                    idx,
+                    stroke_id,
+                    sqlite3.Binary(blob),
+                    stroke_length,
+                    length_class,
+                )
             )
 
     cur.executemany(
