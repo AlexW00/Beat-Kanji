@@ -715,23 +715,44 @@ class SettingsScene: SKScene {
         let location = touch.location(in: self)
         let nodes = nodes(at: location)
         
-        // Check dropdown pickers first (handles dropdown and button)
-        if displayPicker?.handleTouchEnded(location: location, nodes: nodes) == true {
-            resetTouchState()
-            backButton?.run(SKAction.scale(to: 1.0, duration: 0.1))
-            return
-        }
-        
-        if kanjiSizePicker?.handleTouchEnded(location: location, nodes: nodes) == true {
-            resetTouchState()
-            backButton?.run(SKAction.scale(to: 1.0, duration: 0.1))
-            return
-        }
-        
-        if iPadModePicker?.handleTouchEnded(location: location, nodes: nodes) == true {
-            resetTouchState()
-            backButton?.run(SKAction.scale(to: 1.0, duration: 0.1))
-            return
+        // Route touches to the open dropdown only to prevent propagation to items behind it
+        if displayPicker?.isDropdownOpen == true {
+            if displayPicker?.handleTouchEnded(location: location, nodes: nodes) == true {
+                resetTouchState()
+                backButton?.run(SKAction.scale(to: 1.0, duration: 0.1))
+                return
+            }
+        } else if kanjiSizePicker?.isDropdownOpen == true {
+            if kanjiSizePicker?.handleTouchEnded(location: location, nodes: nodes) == true {
+                resetTouchState()
+                backButton?.run(SKAction.scale(to: 1.0, duration: 0.1))
+                return
+            }
+        } else if iPadModePicker?.isDropdownOpen == true {
+            if iPadModePicker?.handleTouchEnded(location: location, nodes: nodes) == true {
+                resetTouchState()
+                backButton?.run(SKAction.scale(to: 1.0, duration: 0.1))
+                return
+            }
+        } else {
+            // No dropdowns are open, so let each picker decide if it should handle the tap
+            if displayPicker?.handleTouchEnded(location: location, nodes: nodes) == true {
+                resetTouchState()
+                backButton?.run(SKAction.scale(to: 1.0, duration: 0.1))
+                return
+            }
+            
+            if kanjiSizePicker?.handleTouchEnded(location: location, nodes: nodes) == true {
+                resetTouchState()
+                backButton?.run(SKAction.scale(to: 1.0, duration: 0.1))
+                return
+            }
+            
+            if iPadModePicker?.handleTouchEnded(location: location, nodes: nodes) == true {
+                resetTouchState()
+                backButton?.run(SKAction.scale(to: 1.0, duration: 0.1))
+                return
+            }
         }
         
         // Check pagination buttons (iPad only)
