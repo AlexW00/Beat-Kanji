@@ -280,15 +280,14 @@ extension PlayScene {
         let node = SKNode()
         node.alpha = 0.0
         
-        // Calculate scale and offset to center the kanji
-        // On iPad with Apple Pencil mode, use a smaller kanji for easier drawing
+        // Calculate scale and offset using predefined kanji size from settings
         let isIPad = UIDevice.current.userInterfaceIdiom == .pad
-        let useApplePencilMode = isIPad && SettingsStore.shared.iPadInputMode == .applePencil
-        let scaleFactor: CGFloat = useApplePencilMode ? 0.45 : 0.8
+        let kanjiSize = SettingsStore.shared.kanjiSize
+        let scaleFactor: CGFloat = isIPad ? kanjiSize.iPadScale : kanjiSize.iPhoneScale
         let scale = min(size.width, size.height) * scaleFactor
         let offsetX = (size.width - scale) / 2
-        // Move to bottom (e.g., 10% from bottom for normal, slightly higher for Apple Pencil mode)
-        let bottomOffset: CGFloat = useApplePencilMode ? 0.25 : 0.15
+        // Position kanji at bottom of screen based on size setting
+        let bottomOffset: CGFloat = isIPad ? kanjiSize.iPadBottomOffset : kanjiSize.iPhoneBottomOffset
         let offsetY = size.height * bottomOffset
         node.userData = ["scale": scale, "offsetX": offsetX, "offsetY": offsetY]
         node.position = CGPoint(x: offsetX, y: offsetY)
@@ -357,15 +356,14 @@ extension PlayScene {
         let node = SKNode()
         node.alpha = 0.0
         
-        // Calculate scale and offset to center the kanji
-        // On iPad with Apple Pencil mode, use a smaller kanji for easier drawing
+        // Calculate scale and offset using predefined kanji size from settings
         let isIPad = UIDevice.current.userInterfaceIdiom == .pad
-        let useApplePencilMode = isIPad && SettingsStore.shared.iPadInputMode == .applePencil
-        let scaleFactor: CGFloat = useApplePencilMode ? 0.45 : 0.8
+        let kanjiSize = SettingsStore.shared.kanjiSize
+        let scaleFactor: CGFloat = isIPad ? kanjiSize.iPadScale : kanjiSize.iPhoneScale
         let scale = min(size.width, size.height) * scaleFactor
         let offsetX = (size.width - scale) / 2
-        // Move to bottom (e.g., 10% from bottom for normal, slightly higher for Apple Pencil mode)
-        let bottomOffset: CGFloat = useApplePencilMode ? 0.25 : 0.15
+        // Position kanji at bottom of screen based on size setting
+        let bottomOffset: CGFloat = isIPad ? kanjiSize.iPadBottomOffset : kanjiSize.iPhoneBottomOffset
         let offsetY = size.height * bottomOffset
         node.userData = ["scale": scale, "offsetX": offsetX, "offsetY": offsetY]
         node.position = CGPoint(x: offsetX, y: offsetY)

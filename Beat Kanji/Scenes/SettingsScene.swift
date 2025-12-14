@@ -23,8 +23,9 @@ class SettingsScene: SKScene {
     private var interfaceSlider: SliderComponent!
     private var displayPicker: DropdownPicker<PostKanjiDisplayOption>!
     private var iPadModePicker: DropdownPicker<iPadInputMode>!
+    private var kanjiSizePicker: DropdownPicker<KanjiSize>!
     
-    // Pagination (iPad only)
+    // Pagination (both iPhone and iPad)
     private var currentPage: Int = 0
     private var paginationContainer: SKNode?
     private var page1Container: SKNode?
@@ -84,20 +85,13 @@ class SettingsScene: SKScene {
         setupBackButton()
         setupTitle()
         
-        let isIPad = UIDevice.current.userInterfaceIdiom == .pad
-        
-        if isIPad {
-            // iPad: Use pagination - page 1 has Sound, Display, iPad; page 2 has About
-            setupPage1Container()
-            setupPage2Container()
-            setupPaginationControls()
-            showPage(0)
-        } else {
-            // iPhone: Show all categories (no iPad settings panel)
-            setupSoundCategory(parentNode: self)
-            setupDisplayCategory(parentNode: self)
-            setupAboutCategory(parentNode: self)
-        }
+        // Both iPhone and iPad use pagination
+        // iPhone: page 1 has Sound, Display, Kanji Size; page 2 has About
+        // iPad: page 1 has Sound, Display, Kanji Size; page 2 has iPad Mode, About
+        setupPage1Container()
+        setupPage2Container()
+        setupPaginationControls()
+        showPage(0)
     }
     
     private func setupTitle() {
@@ -285,14 +279,92 @@ class SettingsScene: SKScene {
         categoryContainer.addChild(displayPicker)
     }
     
+    private func setupKanjiSizeCategory(parentNode: SKNode) {
+        let layout = LayoutConstants.shared
+        let menuWidth = layout.menuWidth
+        let centerX = layout.menuCenterX
+        let categoryPositions = layout.settingsCategoryYPositions()
+        
+        // Position: on iPhone use kanjiSize slot; on iPad page 1 also use kanjiSize slot
+        let categoryY = categoryPositions.kanjiSize
+        
+        // Content layout (header in title bar + label + picker)
+        let contentHeight = layout.standardCategoryHeight
+        
+        // Container for the category
+        let categoryContainer = SKNode()
+        categoryContainer.name = "kanjiSizeCategory"
+        categoryContainer.position = CGPoint(x: centerX, y: categoryY)
+        categoryContainer.zPosition = 58  // Between display (60) and iPad (55)
+        parentNode.addChild(categoryContainer)
+        
+        // Background using menu-expanded-mid with NON-UNIFORM scaling
+        let background = SKSpriteNode(imageNamed: "menu-expanded-mid")
+        let bgScaleX = menuWidth / background.size.width
+        let bgScaleY = contentHeight / background.size.height
+        background.xScale = bgScaleX
+        background.yScale = bgScaleY
+        background.position = .zero
+        background.zPosition = 0
+        categoryContainer.addChild(background)
+        
+        // Category header label (at title bar - top edge of container)
+        let headerLabel = SKLabelNode(fontNamed: FontConfig.bold)
+        headerLabel.text = NSLocalizedString("settings.category.kanjiSize", comment: "Kanji Size category header")
+        headerLabel.fontSize = layout.headerFontSize
+        headerLabel.fontColor = .white
+        headerLabel.horizontalAlignmentMode = .center
+        headerLabel.verticalAlignmentMode = .center
+        headerLabel.position = CGPoint(x: 0, y: contentHeight / 2 - layout.standardCategoryHeaderTopPadding)
+        headerLabel.zPosition = 10
+        categoryContainer.addChild(headerLabel)
+        
+        // Size label
+        let sizeLabel = SKLabelNode(fontNamed: FontConfig.regular)
+        sizeLabel.text = NSLocalizedString("settings.kanjiSize.label", comment: "Size label")
+        sizeLabel.fontSize = layout.bodyFontSize
+        sizeLabel.fontColor = .white
+        sizeLabel.horizontalAlignmentMode = .center
+        sizeLabel.verticalAlignmentMode = .center
+        sizeLabel.position = CGPoint(x: 0, y: 20)
+        sizeLabel.zPosition = 10
+        categoryContainer.addChild(sizeLabel)
+        
+        // Picker options
+        let pickerOptions: [(value: KanjiSize, label: String)] = KanjiSize.allCases.map { option in
+            (value: option, label: option.displayName)
+        }
+        
+        kanjiSizePicker = DropdownPicker(
+            width: 180,
+            options: pickerOptions,
+            initialSelection: settings.kanjiSize
+        )
+        kanjiSizePicker.position = CGPoint(x: 0, y: -30)
+        kanjiSizePicker.zPosition = 100
+        kanjiSizePicker.onSelectionChanged = { [weak self] value in
+            self?.settings.kanjiSize = value
+        }
+        categoryContainer.addChild(kanjiSizePicker)
+    }
+    
     private func setupAboutCategory(parentNode: SKNode) {
         let layout = LayoutConstants.shared
         let menuWidth = layout.menuWidth
         let centerX = layout.menuCenterX
         let categoryPositions = layout.settingsCategoryYPositions()
-        // For iPad page 2, use the sound category position (top of page)
         let isIPad = UIDevice.current.userInterfaceIdiom == .pad
-        let categoryY = isIPad && parentNode != self ? categoryPositions.sound : categoryPositions.about
+        // For page 2: iPad has About below iPad Mode, iPhone has About at top
+        let categoryY: CGFloat
+        if parentNode == self {
+            categoryY = categoryPositions.about
+        } else if isIPad {
+            // iPad page 2: About below iPad Mode (use display position)
+            categoryY = categoryPositions.display
+        } else {
+            // iPhone page 2: About at top (use sound position)
+            categoryY = categoryPositions.sound
+        }
         
         // Same content height as display category
         let contentHeight = layout.standardCategoryHeight
@@ -377,9 +449,10 @@ class SettingsScene: SKScene {
         page1Container?.zPosition = 40
         addChild(page1Container!)
         
+        // Page 1: Sound, Display, Kanji Size (same for iPhone and iPad)
         setupSoundCategory(parentNode: page1Container!)
         setupDisplayCategory(parentNode: page1Container!)
-        setupiPadCategory(parentNode: page1Container!)
+        setupKanjiSizeCategory(parentNode: page1Container!)
     }
     
     private func setupPage2Container() {
@@ -389,7 +462,16 @@ class SettingsScene: SKScene {
         page2Container?.alpha = 0
         addChild(page2Container!)
         
-        setupAboutCategory(parentNode: page2Container!)
+        let isIPad = UIDevice.current.userInterfaceIdiom == .pad
+        
+        if isIPad {
+            // iPad page 2: iPad Mode, About
+            setupiPadCategory(parentNode: page2Container!)
+            setupAboutCategory(parentNode: page2Container!)
+        } else {
+            // iPhone page 2: About only
+            setupAboutCategory(parentNode: page2Container!)
+        }
     }
     
     private func setupiPadCategory(parentNode: SKNode) {
@@ -397,7 +479,8 @@ class SettingsScene: SKScene {
         let menuWidth = layout.menuWidth
         let centerX = layout.menuCenterX
         let categoryPositions = layout.settingsCategoryYPositions()
-        let categoryY = categoryPositions.about  // Use the about position (bottom)
+        // iPad Mode is now on page 2, use sound position (top of page)
+        let categoryY = categoryPositions.sound
         
         // Content layout (header in title bar + label + picker)
         let contentHeight = layout.standardCategoryHeight
@@ -582,6 +665,14 @@ class SettingsScene: SKScene {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
         
+        // If any dropdown is open, don't register button presses behind it
+        let anyDropdownOpen = (displayPicker?.isDropdownOpen == true) ||
+                              (kanjiSizePicker?.isDropdownOpen == true) ||
+                              (iPadModePicker?.isDropdownOpen == true)
+        if anyDropdownOpen {
+            return
+        }
+        
         // Check back button
         if let back = backButton {
             let backLocation = touch.location(in: back)
@@ -631,6 +722,12 @@ class SettingsScene: SKScene {
             return
         }
         
+        if kanjiSizePicker?.handleTouchEnded(location: location, nodes: nodes) == true {
+            resetTouchState()
+            backButton?.run(SKAction.scale(to: 1.0, duration: 0.1))
+            return
+        }
+        
         if iPadModePicker?.handleTouchEnded(location: location, nodes: nodes) == true {
             resetTouchState()
             backButton?.run(SKAction.scale(to: 1.0, duration: 0.1))
@@ -658,6 +755,7 @@ class SettingsScene: SKScene {
             if backButtonTouchBegan && abs(backLocation.x) < 50 && abs(backLocation.y) < 50 {
                 resetTouchState()
                 displayPicker?.closeDropdown()
+                kanjiSizePicker?.closeDropdown()
                 iPadModePicker?.closeDropdown()
                 AudioManager.shared.playUISound(.buttonBack)
                 transitionToStartScene()

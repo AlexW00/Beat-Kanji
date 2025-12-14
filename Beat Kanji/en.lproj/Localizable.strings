@@ -42,6 +42,11 @@
 "settings.ipad.inputMode" = "Input Mode";
 "settings.ipad.default" = "Default";
 "settings.ipad.applePencil" = "Apple Pencil";
+"settings.category.kanjiSize" = "Kanji Size";
+"settings.kanjiSize.label" = "Size";
+"settings.kanjiSize.small" = "Small";
+"settings.kanjiSize.medium" = "Medium";
+"settings.kanjiSize.large" = "Large";
 
 // Credits Screen
 "credits.title" = "Credits";

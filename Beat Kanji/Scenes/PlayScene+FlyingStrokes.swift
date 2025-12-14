@@ -200,13 +200,13 @@ extension PlayScene {
         let node = SKNode()
         node.alpha = 0.5 // Preview is semi-transparent
         
-        // Calculate scale and offset - must match current kanji sizing including iPad mode
+        // Calculate scale and offset using predefined kanji size from settings
         let isIPad = UIDevice.current.userInterfaceIdiom == .pad
-        let useApplePencilMode = isIPad && SettingsStore.shared.iPadInputMode == .applePencil
-        let scaleFactor: CGFloat = useApplePencilMode ? 0.45 : 0.8
+        let kanjiSize = SettingsStore.shared.kanjiSize
+        let scaleFactor: CGFloat = isIPad ? kanjiSize.iPadScale : kanjiSize.iPhoneScale
         let scale = min(size.width, size.height) * scaleFactor
         let offsetX = (size.width - scale) / 2 // Centered horizontally
-        let bottomOffset: CGFloat = useApplePencilMode ? 0.25 : 0.15
+        let bottomOffset: CGFloat = isIPad ? kanjiSize.iPadBottomOffset : kanjiSize.iPhoneBottomOffset
         let offsetY = size.height * bottomOffset
         
         node.userData = ["scale": scale, "offsetX": offsetX, "offsetY": offsetY]

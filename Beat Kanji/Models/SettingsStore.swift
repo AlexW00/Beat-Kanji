@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// Options for what to display after completing a kanji
 enum PostKanjiDisplayOption: String, Codable, CaseIterable {
@@ -20,7 +21,7 @@ enum PostKanjiDisplayOption: String, Codable, CaseIterable {
     }
 }
 
-/// Options for iPad input mode (affects kanji size in play scene)
+/// Options for iPad input mode
 enum iPadInputMode: String, Codable, CaseIterable {
     case `default` = "default"
     case applePencil = "applePencil"
@@ -31,7 +32,7 @@ enum iPadInputMode: String, Codable, CaseIterable {
         case .applePencil: return NSLocalizedString("settings.ipad.applePencil", comment: "Apple Pencil mode")
         }
     }
-
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let rawValue = try container.decode(String.self)
@@ -56,14 +57,66 @@ enum iPadInputMode: String, Codable, CaseIterable {
     }
 }
 
+/// Options for kanji size in play scene
+enum KanjiSize: String, Codable, CaseIterable {
+    case small = "small"
+    case medium = "medium"
+    case large = "large"
+    
+    var displayName: String {
+        switch self {
+        case .small: return NSLocalizedString("settings.kanjiSize.small", comment: "Small kanji size")
+        case .medium: return NSLocalizedString("settings.kanjiSize.medium", comment: "Medium kanji size")
+        case .large: return NSLocalizedString("settings.kanjiSize.large", comment: "Large kanji size")
+        }
+    }
+    
+    /// Returns the kanji scale (as a fraction of screen size) for iPhone
+    var iPhoneScale: CGFloat {
+        switch self {
+        case .small: return 0.55
+        case .medium: return 0.70
+        case .large: return 0.85
+        }
+    }
+    
+    /// Returns the kanji scale (as a fraction of screen size) for iPad
+    var iPadScale: CGFloat {
+        switch self {
+        case .small: return 0.35
+        case .medium: return 0.50
+        case .large: return 0.65
+        }
+    }
+    
+    /// Returns the bottom offset (as a fraction of screen height) for iPhone
+    var iPhoneBottomOffset: CGFloat {
+        switch self {
+        case .small: return 0.22
+        case .medium: return 0.18
+        case .large: return 0.12
+        }
+    }
+    
+    /// Returns the bottom offset (as a fraction of screen height) for iPad
+    var iPadBottomOffset: CGFloat {
+        switch self {
+        case .small: return 0.30
+        case .medium: return 0.24
+        case .large: return 0.18
+        }
+    }
+}
+
 struct SettingsData: Codable {
     var musicVolume: Float
     var interfaceVolume: Float
     var postKanjiDisplay: PostKanjiDisplayOption
     var iPadInputMode: iPadInputMode
+    var kanjiSize: KanjiSize
     
     // Default volumes start at 100% so new players hear full audio by default
-    static let `default` = SettingsData(musicVolume: 1.0, interfaceVolume: 1.0, postKanjiDisplay: .meaning, iPadInputMode: .default)
+    static let `default` = SettingsData(musicVolume: 1.0, interfaceVolume: 1.0, postKanjiDisplay: .meaning, iPadInputMode: .default, kanjiSize: .medium)
 }
 
 final class SettingsStore {
@@ -109,6 +162,14 @@ final class SettingsStore {
         get { settings.iPadInputMode }
         set {
             settings.iPadInputMode = newValue
+            persist()
+        }
+    }
+    
+    var kanjiSize: KanjiSize {
+        get { settings.kanjiSize }
+        set {
+            settings.kanjiSize = newValue
             persist()
         }
     }

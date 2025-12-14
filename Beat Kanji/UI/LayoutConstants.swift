@@ -245,22 +245,38 @@ struct LayoutConstants {
     }
     
     /// Get the appropriate category Y positions for settings screen
-    /// Returns (soundY, displayY, aboutY) based on screen height
-    func settingsCategoryYPositions() -> (sound: CGFloat, display: CGFloat, about: CGFloat) {
-        // Compress vertical spread on iPad to keep pagination clear
+    /// Returns (soundY, displayY, kanjiSizeY, aboutY, iPadY) based on screen height
+    /// Page 1: Sound, Display, Kanji Size (both devices)
+    /// Page 2: About (iPhone) or iPad Mode + About (iPad)
+    func settingsCategoryYPositions() -> (sound: CGFloat, display: CGFloat, kanjiSize: CGFloat, about: CGFloat, iPad: CGFloat) {
+        // Sound is tall (210), Display and KanjiSize are standard (150)
+        // Calculate positions to have equal spacing between category edges
+        let soundHeight: CGFloat = tallCategoryHeight  // 210
+        let standardHeight: CGFloat = standardCategoryHeight  // 150
+        let spacing: CGFloat = 16  // Gap between categories
+        
         if isIPad {
-            let soundY = sceneSize.height * 0.64
-            let displayY = sceneSize.height * 0.46
-            let aboutY = sceneSize.height * 0.30
-            return (soundY, displayY, aboutY)
+            // iPad: Start from top and work down
+            let topMargin = sceneSize.height * 0.22
+            let soundY = sceneSize.height - topMargin - soundHeight / 2
+            let displayY = soundY - soundHeight / 2 - spacing - standardHeight / 2
+            let kanjiSizeY = displayY - standardHeight / 2 - spacing - standardHeight / 2
+            // iPad page 2: iPad Mode (top), About (below) - same positions as sound/display
+            let iPadY = soundY
+            let aboutY = displayY
+            return (soundY, displayY, kanjiSizeY, aboutY, iPadY)
         }
         
-        // Slightly tighter grouping on iPhone while keeping clear spacing
-        let soundY = sceneSize.height * 0.64
-        let displayY = sceneSize.height * 0.42
-        let aboutY = sceneSize.height * 0.24
+        // iPhone: Start from top and work down
+        let topMargin = sceneSize.height * 0.22
+        let soundY = sceneSize.height - topMargin - soundHeight / 2
+        let displayY = soundY - soundHeight / 2 - spacing - standardHeight / 2
+        let kanjiSizeY = displayY - standardHeight / 2 - spacing - standardHeight / 2
+        // iPhone page 2: About only (use sound position)
+        let aboutY = soundY
+        let iPadY: CGFloat = 0  // Not used on iPhone
         
-        return (soundY, displayY, aboutY)
+        return (soundY, displayY, kanjiSizeY, aboutY, iPadY)
     }
 }
 
