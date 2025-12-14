@@ -43,7 +43,7 @@
 "settings.ipad.default" = "デフォルト";
 "settings.ipad.applePencil" = "Apple Pencil";
 "settings.category.kanjiSize" = "漢字サイズ";
-"settings.kanjiSize.label" = "サイズ";
+"settings.kanjiSize.label" = "漢字の大きさを選びます";
 "settings.kanjiSize.small" = "小";
 "settings.kanjiSize.medium" = "中";
 "settings.kanjiSize.large" = "大";
