@@ -26,6 +26,12 @@ final class SongScoreStore {
     private var storage: [String: SongScoreRecord] = [:]
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
+    
+    // Debounced async persistence to avoid main thread blocking (same pattern as KanjiUserStore)
+    private let persistQueue = DispatchQueue(label: "com.beatkanji.songScoreStore.persist", qos: .utility)
+    private var pendingPersist = false
+    private let debounceInterval: TimeInterval = 0.5
+    
     private init() {
         load()
     }
@@ -41,10 +47,36 @@ final class SongScoreStore {
             storage = decoded
         }
     }
-    private func persist() {
+    
+    /// Debounced async persistence - avoids blocking main thread during gameplay
+    private func schedulePersist() {
+        guard !pendingPersist else { return }
+        pendingPersist = true
+        
+        // Capture storage snapshot for thread-safe encoding
+        let storageCopy = storage
+        
+        persistQueue.asyncAfter(deadline: .now() + debounceInterval) { [weak self] in
+            guard let self = self else { return }
+            
+            // Encode on background thread
+            if let data = try? self.encoder.encode(storageCopy) {
+                // UserDefaults.set is thread-safe
+                UserDefaults.standard.set(data, forKey: self.defaultsKey)
+            }
+            
+            DispatchQueue.main.async {
+                self.pendingPersist = false
+            }
+        }
+    }
+    
+    /// Force immediate persistence (call on app background/terminate)
+    func persistImmediately() {
         if let data = try? encoder.encode(storage) {
             UserDefaults.standard.set(data, forKey: defaultsKey)
         }
+        pendingPersist = false
     }
     @discardableResult
     func record(songId: String, difficulty: DifficultyLevel, score: Int, maxPossibleScore: Int) -> SongScoreRecord {
@@ -61,7 +93,7 @@ final class SongScoreStore {
         } else {
             storage[key] = SongScoreRecord(last: entry, best: entry)
         }
-        persist()
+        schedulePersist()
         return storage[key]!
     }
     func record(songId: String, difficulty: DifficultyLevel, result: SongScoreEntry) {
@@ -75,7 +107,7 @@ final class SongScoreStore {
         } else {
             storage[key] = SongScoreRecord(last: result, best: result)
         }
-        persist()
+        schedulePersist()
     }
     func record(songId: String, difficulty: DifficultyLevel, score: Int, percentage: Double) {
         let entry = SongScoreEntry(score: score, percentage: clampPercentage(percentage), recordedAt: Date())
@@ -107,31 +139,67 @@ final class KanjiUserStore {
     private var storage: [String: KanjiUserData] = [:]
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
+    
+    // Debounced async persistence to avoid main thread blocking
+    private let persistQueue = DispatchQueue(label: "com.beatkanji.kanjiUserStore.persist", qos: .utility)
+    private var pendingPersist = false
+    private let debounceInterval: TimeInterval = 0.5  // Batch writes within 500ms
+    
     private init() {
         load()
     }
+    
     private func load() {
         guard let data = UserDefaults.standard.data(forKey: defaultsKey) else { return }
         if let decoded = try? decoder.decode([String: KanjiUserData].self, from: data) {
             storage = decoded
         }
     }
-    private func persist() {
+    
+    /// Debounced async persistence - avoids blocking main thread during gameplay
+    private func schedulePersist() {
+        guard !pendingPersist else { return }
+        pendingPersist = true
+        
+        // Capture storage snapshot for thread-safe encoding
+        let storageCopy = storage
+        
+        persistQueue.asyncAfter(deadline: .now() + debounceInterval) { [weak self] in
+            guard let self = self else { return }
+            
+            // Encode on background thread
+            if let data = try? self.encoder.encode(storageCopy) {
+                // UserDefaults.set is thread-safe
+                UserDefaults.standard.set(data, forKey: self.defaultsKey)
+            }
+            
+            DispatchQueue.main.async {
+                self.pendingPersist = false
+            }
+        }
+    }
+    
+    /// Force immediate persistence (call on app background/terminate)
+    func persistImmediately() {
         if let data = try? encoder.encode(storage) {
             UserDefaults.standard.set(data, forKey: defaultsKey)
         }
+        pendingPersist = false
     }
+    
     private func updateEntry(for kanjiId: String, mutate: (inout KanjiUserData) -> Void) {
         var entry = storage[kanjiId] ?? KanjiUserData(timesSeen: 0, scores: [])
         mutate(&entry)
         storage[kanjiId] = entry
-        persist()
+        schedulePersist()  // Non-blocking
     }
+    
     func markSeen(kanjiId: String) {
         updateEntry(for: kanjiId) { entry in
             entry.timesSeen += 1
         }
     }
+    
     func recordScore(kanjiId: String, score: Int) {
         updateEntry(for: kanjiId) { entry in
             entry.scores.append(score)
@@ -140,6 +208,7 @@ final class KanjiUserStore {
             }
         }
     }
+    
     func data(for kanjiId: String) -> KanjiUserData? {
         return storage[kanjiId]
     }

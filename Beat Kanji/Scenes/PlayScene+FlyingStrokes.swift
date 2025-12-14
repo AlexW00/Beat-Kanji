@@ -77,6 +77,37 @@ extension PlayScene {
         guard let kanji = gameEngine.getKanjiAtIndex(kanjiIndex) else { return }
         guard index < kanji.strokes.count else { return }
         
+        let stroke = kanji.strokes[index]
+        let points = stroke.cgPoints
+        guard !points.isEmpty else { return }
+        
+        // === PRECOMPUTE PATH DATA (done once at spawn, not per-frame) ===
+        // Calculate segment lengths and total length
+        var segmentLengths: [Double] = []
+        var totalLength: Double = 0
+        for i in 1..<points.count {
+            let segLen = hypot(points[i].x - points[i-1].x, points[i].y - points[i-1].y)
+            segmentLengths.append(segLen)
+            totalLength += segLen
+        }
+        
+        // Precompute deduplicated points for smooth path generation
+        // This avoids the expensive deduplication logic every frame
+        let minDistanceThreshold: CGFloat = 0.7 / 300.0 // Normalize threshold to 0-1 space (assuming ~300px scale)
+        var smoothFullPathPoints: [CGPoint] = []
+        if let first = points.first {
+            smoothFullPathPoints.append(first)
+            var lastAdded = first
+            for i in 1..<points.count {
+                let p = points[i]
+                let dist = hypot(p.x - lastAdded.x, p.y - lastAdded.y)
+                if dist >= minDistanceThreshold || i == points.count - 1 {
+                    smoothFullPathPoints.append(p)
+                    lastAdded = p
+                }
+            }
+        }
+        
         // Check if this is a rainbow stroke
         let isRainbow = gameEngine.isStrokeRainbow(kanjiIndex: kanjiIndex, strokeIndex: index)
         
@@ -190,7 +221,11 @@ extension PlayScene {
             depth: spawnDepth,
             kanjiIndex: kanjiIndex,
             isNextKanji: isNextKanji,
-            isRainbow: isRainbow
+            isRainbow: isRainbow,
+            normalizedPoints: points,
+            segmentLengths: segmentLengths,
+            totalLength: totalLength,
+            smoothFullPathPoints: smoothFullPathPoints
         )
         flyingStrokes.append(flying)
     }
@@ -229,21 +264,17 @@ extension PlayScene {
         for i in (0..<flyingStrokes.count).reversed() {
             var flying = flyingStrokes[i]
             
-            // Get the correct node and kanji for this flying stroke
+            // Get the correct node for this flying stroke
             let targetNode: SKNode?
-            let kanjiEntry: KanjiEntry?
             
             if flying.isNextKanji {
                 targetNode = nextKanjiNode
-                kanjiEntry = gameEngine.getKanjiAtIndex(flying.kanjiIndex)
             } else {
                 targetNode = currentKanjiNode
-                kanjiEntry = gameEngine.currentKanji
             }
             
             guard let node = targetNode,
-                  let scale = node.userData?["scale"] as? CGFloat,
-                  let kanji = kanjiEntry else {
+                  let scale = node.userData?["scale"] as? CGFloat else {
                 // Remove orphaned flying strokes
                 flying.bgNode.removeFromParent()
                 flying.fillNode.removeFromParent()
@@ -270,129 +301,52 @@ extension PlayScene {
             
             // Also remove look-ahead strokes when they become current
             if flying.isNextKanji && flying.kanjiIndex == gameEngine.currentKanjiIndexInSequence {
-                // This stroke now belongs to the current kanji, remove the look-ahead version
                 flying.bgNode.removeFromParent()
                 flying.fillNode.removeFromParent()
                 flyingStrokes.remove(at: i)
                 continue
             }
             
-            guard flying.index < kanji.strokes.count else {
+            // Use cached path data from spawn (avoids per-frame geometry calculations)
+            let points = flying.normalizedPoints
+            let segmentLengths = flying.segmentLengths
+            let totalLength = flying.totalLength
+            
+            guard !points.isEmpty else {
                 flying.bgNode.removeFromParent()
                 flying.fillNode.removeFromParent()
                 flyingStrokes.remove(at: i)
                 continue
             }
-            
-            let stroke = kanji.strokes[flying.index]
-            let points = stroke.cgPoints
-            
-            // 1. Create Full Path (Background)
-            let fullPath = CGMutablePath()
-            // 2. Create Partial Path (Fill)
-            let fillPath = CGMutablePath()
             
             // Calculate fill percentage based on flight progress
             let fillPercent = 1.0 - max(0.0, min(1.0, progress))
-            let targetLen = stroke.length() * Double(fillPercent)
-            var currentLen: Double = 0
-            let totalLength = stroke.length()
+            let targetLen = totalLength * Double(fillPercent)
             
-            // For rainbow strokes, we need to track segment positions
-            var projectedPoints: [CGPoint] = []
-            var segmentLengths: [Double] = []
-            
-            if let first = points.first {
-                // Helper to project a local point (0..1)
-                func getProjectedPoint(_ p: CGPoint) -> CGPoint {
-                    // Local (0..1) -> Local Scaled
-                    let localX = p.x * scale
-                    let localY = (1.0 - p.y) * scale
-                    
-                    // Local Scaled -> Screen Space
-                    let screenX = localX + nodePos.x
-                    let screenY = localY + nodePos.y
-                    
-                    // Project in Screen Space
-                    let projScreen = project(point: CGPoint(x: screenX, y: screenY), depth: flying.depth, center: screenCenter)
-                    
-                    // Screen Space -> Local Scaled
-                    return CGPoint(x: projScreen.x - nodePos.x, y: projScreen.y - nodePos.y)
-                }
-                
-                let p1 = getProjectedPoint(first)
-                projectedPoints.append(p1)
-                
-                // Minimum distance threshold to avoid rendering artifacts from near-identical points
-                // When strokes are scaled down by perspective, consecutive points can become
-                // extremely close, causing SpriteKit's line join calculations to produce visual glitches.
-                let minDistanceThreshold: CGFloat = 0.7
-                
-                // Collect all projected points with deduplication
-                var dedupedFullPoints: [CGPoint] = [p1]
-                var lastFullPoint = p1
-                
-                for j in 1..<points.count {
-                    let pa = points[j-1]
-                    let pb = points[j]
-                    let segLen = hypot(pb.x - pa.x, pb.y - pa.y)
-                    
-                    let p_proj = getProjectedPoint(pb)
-                    
-                    // Only add to full path if distance from last added point is significant
-                    let fullPathDist = hypot(p_proj.x - lastFullPoint.x, p_proj.y - lastFullPoint.y)
-                    if fullPathDist >= minDistanceThreshold || j == points.count - 1 {
-                        dedupedFullPoints.append(p_proj)
-                        lastFullPoint = p_proj
-                    }
-                    
-                    projectedPoints.append(p_proj)
-                    segmentLengths.append(segLen)
-                    currentLen += segLen
-                }
-                
-                // Create smooth full path using Catmull-Rom splines
-                let smoothFullPath = NeonStrokeFactory.smoothPath(from: dedupedFullPoints, tension: 0.5)
-                fullPath.addPath(smoothFullPath)
-                
-                // Build fill path points based on fill percentage
-                currentLen = 0
-                var dedupedFillPoints: [CGPoint] = [p1]
-                var lastFillPoint = p1
-                
-                for j in 1..<points.count {
-                    let pa = points[j-1]
-                    let pb = points[j]
-                    let segLen = hypot(pb.x - pa.x, pb.y - pa.y)
-                    
-                    if currentLen < targetLen {
-                        if currentLen + segLen <= targetLen {
-                            // Add full segment - but only if distance is significant
-                            let p_proj = projectedPoints[j]
-                            let fillDist = hypot(p_proj.x - lastFillPoint.x, p_proj.y - lastFillPoint.y)
-                            if fillDist >= minDistanceThreshold || j == points.count - 1 {
-                                dedupedFillPoints.append(p_proj)
-                                lastFillPoint = p_proj
-                            }
-                        } else {
-                            // Add partial segment
-                            let rem = targetLen - currentLen
-                            let t = rem / segLen
-                            let newX = pa.x + (pb.x - pa.x) * Double(t)
-                            let newY = pa.y + (pb.y - pa.y) * Double(t)
-                            let p_partial = getProjectedPoint(CGPoint(x: newX, y: newY))
-                            // Always add the final partial point for accuracy
-                            dedupedFillPoints.append(p_partial)
-                            lastFillPoint = p_partial
-                        }
-                    }
-                    currentLen += segLen
-                }
-                
-                // Create smooth fill path using Catmull-Rom splines
-                let smoothFillPath = NeonStrokeFactory.smoothPath(from: dedupedFillPoints, tension: 0.5)
-                fillPath.addPath(smoothFillPath)
+            // Helper to project a local point (0..1) - only operation that varies per-frame
+            @inline(__always) func projectPoint(_ p: CGPoint) -> CGPoint {
+                let localX = p.x * scale
+                let localY = (1.0 - p.y) * scale
+                let screenX = localX + nodePos.x
+                let screenY = localY + nodePos.y
+                let projScreen = project(point: CGPoint(x: screenX, y: screenY), depth: flying.depth, center: screenCenter)
+                return CGPoint(x: projScreen.x - nodePos.x, y: projScreen.y - nodePos.y)
             }
+            
+            // Project all points (using cached normalized points)
+            let projectedPoints = points.map { projectPoint($0) }
+            
+            // Build full path from cached smooth points (pre-deduplicated at spawn)
+            let projectedSmoothPoints = flying.smoothFullPathPoints.map { projectPoint($0) }
+            let fullPath = buildSimplePath(from: projectedSmoothPoints)
+            
+            // Build fill path based on fill percentage
+            let fillPath = buildPartialPath(
+                projectedPoints: projectedPoints,
+                segmentLengths: segmentLengths,
+                fillPercent: fillPercent,
+                totalLength: totalLength
+            )
             
             // Handle rainbow strokes with gradient segments
             if flying.isRainbow {
@@ -456,17 +410,19 @@ extension PlayScene {
                     coreNode.glowWidth = 0
                 }
             } else {
-                // Standard stroke - update paths with neon glow and filled core to avoid seams
+                // Standard stroke - use native SKShapeNode stroke rendering (avoids expensive strokedPath calls)
                 let depthScale = 1.0 / (1.0 + flying.depth * perspectiveFactor)
                 let stdLayout = LayoutConstants.shared
                 let bgWidth = stdLayout.flyingStrokeBgWidth * depthScale
                 let glowOuterWidth = stdLayout.flyingStrokeGlowOuterWidth * depthScale
                 let coreWidth = stdLayout.flyingStrokeStandardCoreWidth * depthScale
                 
-                // Background stroke (no glowWidth)
+                // Background stroke - use native stroke rendering
                 flying.bgNode.path = fullPath
-                flying.bgNode.fillColor = .clear  // Ensure no fill shows through
+                flying.bgNode.fillColor = .clear
                 flying.bgNode.lineWidth = bgWidth
+                flying.bgNode.lineCap = .round
+                flying.bgNode.lineJoin = .round
                 flying.bgNode.glowWidth = 0
                 
                 for child in flying.fillNode.children {
@@ -610,6 +566,75 @@ extension PlayScene {
         }
         
         return (bgPath, fillPath)
+    }
+    
+    // MARK: - Optimized Path Building Helpers
+    
+    /// Build a simple CGPath from an array of points (no Catmull-Rom smoothing per-frame)
+    /// Uses quadratic curves for acceptable smoothness with much lower CPU cost
+    private func buildSimplePath(from points: [CGPoint]) -> CGPath {
+        let path = CGMutablePath()
+        guard points.count >= 2 else {
+            if let first = points.first {
+                path.move(to: first)
+            }
+            return path
+        }
+        
+        path.move(to: points[0])
+        
+        // Use simple line segments (the deduplication at spawn keeps point count low)
+        // This avoids the expensive Catmull-Rom spline calculation every frame
+        for i in 1..<points.count {
+            path.addLine(to: points[i])
+        }
+        
+        return path
+    }
+    
+    /// Build a partial path for fill animation based on fill percentage
+    /// Uses cached segment lengths to avoid recalculation
+    private func buildPartialPath(
+        projectedPoints: [CGPoint],
+        segmentLengths: [Double],
+        fillPercent: Double,
+        totalLength: Double
+    ) -> CGPath {
+        let path = CGMutablePath()
+        guard !projectedPoints.isEmpty, totalLength > 0 else { return path }
+        
+        let targetLen = totalLength * fillPercent
+        var currentLen: Double = 0
+        
+        path.move(to: projectedPoints[0])
+        
+        for i in 0..<segmentLengths.count {
+            let segLen = segmentLengths[i]
+            
+            if currentLen >= targetLen {
+                break
+            }
+            
+            if currentLen + segLen <= targetLen {
+                // Add full segment
+                path.addLine(to: projectedPoints[i + 1])
+            } else {
+                // Add partial segment - interpolate the endpoint
+                let remaining = targetLen - currentLen
+                let t = remaining / segLen
+                let p1 = projectedPoints[i]
+                let p2 = projectedPoints[i + 1]
+                let partialPt = CGPoint(
+                    x: p1.x + (p2.x - p1.x) * t,
+                    y: p1.y + (p2.y - p1.y) * t
+                )
+                path.addLine(to: partialPt)
+                break
+            }
+            currentLen += segLen
+        }
+        
+        return path
     }
     
     private func project(point: CGPoint, depth: CGFloat, center: CGPoint) -> CGPoint {

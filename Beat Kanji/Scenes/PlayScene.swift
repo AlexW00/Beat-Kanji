@@ -72,6 +72,12 @@ class PlayScene: SKScene {
         let kanjiIndex: Int // Which kanji this stroke belongs to
         let isNextKanji: Bool // Whether this is a look-ahead stroke from the next kanji
         let isRainbow: Bool // Rainbow strokes restore health on perfect completion
+        
+        // Cached path data (computed once at spawn, avoids per-frame geometry rebuilding)
+        let normalizedPoints: [CGPoint] // Original stroke points in 0-1 space
+        let segmentLengths: [Double] // Length of each segment for fill calculations
+        let totalLength: Double // Total stroke length
+        let smoothFullPathPoints: [CGPoint] // Deduplicated points for smooth path (normalized)
     }
     
     var flyingStrokes: [FlyingStroke] = []

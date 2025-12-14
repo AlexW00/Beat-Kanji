@@ -63,11 +63,14 @@ final class KanjiDataLoader {
     
     /// Load strokes lazily for a given kanji id. Results are cached per kanji.
     /// Uses a fast path for cached strokes to avoid blocking the main thread during gameplay.
+    /// WARNING: If strokes are not cached, this will block briefly. Use preloadStrokes() before gameplay.
     func loadStrokes(for kanjiId: String, expectedCount: Int? = nil) -> [Stroke] {
         // Fast path: check cache with lightweight lock (no dispatch queue sync)
         cacheLock.lock()
-        if let cached = strokeCache[kanjiId] {
-            cacheLock.unlock()
+        let cached = strokeCache[kanjiId]
+        cacheLock.unlock()
+        
+        if let cached = cached {
 #if DEBUG
             if let expected = expectedCount, cached.count != expected {
                 assertionFailure("Kanji \(kanjiId): expected \(expected) strokes, cached \(cached.count)")
@@ -75,15 +78,22 @@ final class KanjiDataLoader {
 #endif
             return cached
         }
-        cacheLock.unlock()
         
-        // Slow path: load from database
+        // Slow path: load from database (should rarely happen if preloadStrokes was called)
+        #if DEBUG
+        print("[KanjiDataLoader] WARNING: Cache miss for \(kanjiId) - consider preloading strokes")
+        #endif
+        
         do {
             return try queue.sync {
                 // Double-check cache inside queue
+                cacheLock.lock()
                 if let cached = strokeCache[kanjiId] {
+                    cacheLock.unlock()
                     return cached
                 }
+                cacheLock.unlock()
+                
                 let strokes = try self.fetchStrokes(for: kanjiId)
 #if DEBUG
                 if let expected = expectedCount, strokes.count != expected {
