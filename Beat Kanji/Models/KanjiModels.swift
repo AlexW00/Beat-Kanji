@@ -72,9 +72,28 @@ enum KanjiCategory: String, CaseIterable {
     }
 }
 
+/// Stroke length classification for dynamic drawing time adjustment
+enum StrokeLengthClass: String {
+    case s = "S"   // Small strokes - baseline drawing time
+    case m = "M"   // Medium strokes - small time bonus
+    case l = "L"   // Long strokes - medium time bonus
+    case xl = "XL" // Extra long strokes - large time bonus
+    
+    /// Extra time bonus (in seconds) to add to the base drawing window
+    var extraTime: TimeInterval {
+        switch self {
+        case .s:  return 0.0    // No bonus
+        case .m:  return 0.25   // +250ms
+        case .l:  return 0.50   // +500ms
+        case .xl: return 0.75   // +750ms
+        }
+    }
+}
+
 struct Stroke {
     let id: String
     let points: [[Double]] // JSON is array of arrays [x, y]
+    let lengthClass: StrokeLengthClass
     
     // Helper to convert to CGPoints
     var cgPoints: [CGPoint] {

@@ -32,6 +32,26 @@ BYTES_PER_STROKE = FLOATS_PER_STROKE * 4
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 
+# Stroke length classification thresholds (based on percentile analysis)
+# S: <0.35 (~55th percentile) - no extra time
+# M: 0.35-0.55 (~55-80th percentile) - small bonus
+# L: 0.55-0.80 (~80-92nd percentile) - medium bonus  
+# XL: >0.80 (~92nd+ percentile) - large bonus
+LENGTH_THRESHOLD_M = 0.35
+LENGTH_THRESHOLD_L = 0.55
+LENGTH_THRESHOLD_XL = 0.80
+
+def classify_stroke_length(length: float) -> str:
+    """Classify stroke length into S/M/L/XL categories."""
+    if length >= LENGTH_THRESHOLD_XL:
+        return "XL"
+    elif length >= LENGTH_THRESHOLD_L:
+        return "L"
+    elif length >= LENGTH_THRESHOLD_M:
+        return "M"
+    else:
+        return "S"
+
 
 # --- Module loading helpers -------------------------------------------------
 def load_module(name: str, path: Path):
@@ -49,7 +69,9 @@ add_keywords_mod = load_module("add_keywords_mod", SCRIPT_DIR / "add_keywords.py
 
 
 # --- Pipeline steps ---------------------------------------------------------
-def convert_kanjivg(input_path: Path, samples: int, normalize_size: float, verbose: bool) -> List[dict]:
+def convert_kanjivg(
+    input_path: Path, samples: int, normalize_size: float, verbose: bool
+) -> List[dict]:
     files = kanj_conv.collect_files(str(input_path))
     if verbose:
         print(f"[1/4] Converting KanjiVG -> strokes from {len(files)} file(s)...")
@@ -83,7 +105,9 @@ def load_jlpt_lookup(path: Path) -> Dict[str, int]:
     }
 
 
-def annotate_tags(entries: Iterable[dict], jlpt_lookup: Dict[str, int], verbose: bool) -> List[dict]:
+def annotate_tags(
+    entries: Iterable[dict], jlpt_lookup: Dict[str, int], verbose: bool
+) -> List[dict]:
     tagged: List[dict] = []
     for entry in entries:
         char = entry.get("kanji") or entry.get("char") or ""
@@ -101,7 +125,9 @@ def annotate_tags(entries: Iterable[dict], jlpt_lookup: Dict[str, int], verbose:
     return tagged
 
 
-def add_keywords(entries: Iterable[dict], keyword_map: Dict[str, Dict[str, str]], verbose: bool) -> List[dict]:
+def add_keywords(
+    entries: Iterable[dict], keyword_map: Dict[str, Dict[str, str]], verbose: bool
+) -> List[dict]:
     enriched: List[dict] = []
     for entry in entries:
         char = entry.get("kanji") or entry.get("char") or ""
@@ -166,6 +192,7 @@ def write_sqlite(entries: List[dict], out_path: Path, verbose: bool) -> None:
             stroke_id TEXT,
             points BLOB NOT NULL,
             length REAL NOT NULL DEFAULT 0.0,
+            length_class TEXT NOT NULL DEFAULT 'S',
             PRIMARY KEY(kanji_id, stroke_index)
         );
         CREATE INDEX idx_kanji_tags_tag ON kanji_tags(tag);
@@ -192,9 +219,10 @@ def write_sqlite(entries: List[dict], out_path: Path, verbose: bool) -> None:
             points = stroke.get("points") or []
             stroke_id = stroke.get("id")
             stroke_length = stroke.get("length") or 0.0
+            length_class = classify_stroke_length(stroke_length)
             blob = pack_points(points)
             stroke_rows.append(
-                (kanji_id, idx, stroke_id, sqlite3.Binary(blob), stroke_length)
+                (kanji_id, idx, stroke_id, sqlite3.Binary(blob), stroke_length, length_class)
             )
 
     cur.executemany(
@@ -206,7 +234,7 @@ def write_sqlite(entries: List[dict], out_path: Path, verbose: bool) -> None:
         tag_rows,
     )
     cur.executemany(
-        "INSERT INTO strokes(kanji_id, stroke_index, stroke_id, points, length) VALUES (?, ?, ?, ?, ?)",
+        "INSERT INTO strokes(kanji_id, stroke_index, stroke_id, points, length, length_class) VALUES (?, ?, ?, ?, ?, ?)",
         stroke_rows,
     )
 
@@ -221,12 +249,32 @@ def write_sqlite(entries: List[dict], out_path: Path, verbose: bool) -> None:
 # --- CLI --------------------------------------------------------------------
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate kanji.sqlite for Beat Kanji")
-    parser.add_argument("--input", default="res/kanji.xml", help="KanjiVG XML path or directory")
-    parser.add_argument("--jlpt", default="res/kanji_jlpt_only.json", help="JLPT lookup JSON")
-    parser.add_argument("--keywords", default="res/kanji-keys.json", help="Keyword map JSON")
-    parser.add_argument("--out", default="Beat Kanji/Resources/Data/kanji.sqlite", help="Output sqlite path")
-    parser.add_argument("--samples", type=int, default=SAMPLES_PER_STROKE, help="Samples per stroke polyline (default 64)")
-    parser.add_argument("--normalize-size", type=float, default=109.0, help="Normalization size for KanjiVG coordinates")
+    parser.add_argument(
+        "--input", default="res/kanji.xml", help="KanjiVG XML path or directory"
+    )
+    parser.add_argument(
+        "--jlpt", default="res/kanji_jlpt_only.json", help="JLPT lookup JSON"
+    )
+    parser.add_argument(
+        "--keywords", default="res/kanji-keys.json", help="Keyword map JSON"
+    )
+    parser.add_argument(
+        "--out",
+        default="Beat Kanji/Resources/Data/kanji.sqlite",
+        help="Output sqlite path",
+    )
+    parser.add_argument(
+        "--samples",
+        type=int,
+        default=SAMPLES_PER_STROKE,
+        help="Samples per stroke polyline (default 64)",
+    )
+    parser.add_argument(
+        "--normalize-size",
+        type=float,
+        default=109.0,
+        help="Normalization size for KanjiVG coordinates",
+    )
     parser.add_argument("--verbose", action="store_true", help="Print progress")
     return parser.parse_args()
 

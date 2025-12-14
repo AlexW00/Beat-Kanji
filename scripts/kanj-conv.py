@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
 KanjiVG -> polyline converter (with "char" field).
@@ -118,7 +117,7 @@ def extract_kanji_from_tree(
     samples: int,
     do_normalize: bool,
     size: float,
-    source_filename: str = ""
+    source_filename: str = "",
 ):
     root = tree.getroot()
     kanji_nodes = root.findall(".//kanji")
@@ -146,22 +145,18 @@ def extract_kanji_from_tree(
             # Calculate stroke length (in original coordinates)
             raw_length = calculate_stroke_length(d)
             # Normalize length the same way as coordinates if requested
-            stroke_length = raw_length / size if do_normalize and size > 0 else raw_length
+            stroke_length = (
+                raw_length / size if do_normalize and size > 0 else raw_length
+            )
             # Round to 2 decimal places to avoid long floating representations
             stroke_length = round(float(stroke_length), 2)
             if do_normalize:
                 points = normalize_points(points, size)
-            strokes_json.append({
-                "id": stroke_id,
-                "points": points,
-                "length": stroke_length
-            })
+            strokes_json.append(
+                {"id": stroke_id, "points": points, "length": stroke_length}
+            )
 
-        results.append({
-            "id": kanji_id,
-            "char": ch,
-            "strokes": strokes_json
-        })
+        results.append({"id": kanji_id, "char": ch, "strokes": strokes_json})
 
     return results
 
@@ -187,14 +182,35 @@ def collect_files(input_path: str) -> list[str]:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--input", required=True, help="KanjiVG XML file or directory of per-kanji files")
-    ap.add_argument("--out", required=True, help="Output json file (single) or directory (--per-kanji)")
-    ap.add_argument("--per-kanji", action="store_true",
-                    help="Write one JSON per kanji into --out directory")
-    ap.add_argument("--samples", type=int, default=64, help="Samples per stroke polyline")
-    ap.add_argument("--normalize", action="store_true",
-                    help="Normalize coordinates to 0..1 by dividing by --size (default 109)")
-    ap.add_argument("--size", type=float, default=109.0, help="Normalization base size for KanjiVG coords")
+    ap.add_argument(
+        "--input",
+        required=True,
+        help="KanjiVG XML file or directory of per-kanji files",
+    )
+    ap.add_argument(
+        "--out",
+        required=True,
+        help="Output json file (single) or directory (--per-kanji)",
+    )
+    ap.add_argument(
+        "--per-kanji",
+        action="store_true",
+        help="Write one JSON per kanji into --out directory",
+    )
+    ap.add_argument(
+        "--samples", type=int, default=64, help="Samples per stroke polyline"
+    )
+    ap.add_argument(
+        "--normalize",
+        action="store_true",
+        help="Normalize coordinates to 0..1 by dividing by --size (default 109)",
+    )
+    ap.add_argument(
+        "--size",
+        type=float,
+        default=109.0,
+        help="Normalization base size for KanjiVG coords",
+    )
     ap.add_argument("--pretty", action="store_true", help="Pretty print JSON")
     args = ap.parse_args()
 
@@ -213,7 +229,7 @@ def main():
             samples=args.samples,
             do_normalize=args.normalize,
             size=args.size,
-            source_filename=f
+            source_filename=f,
         )
 
         if args.per_kanji:
@@ -223,10 +239,16 @@ def main():
                 if k["char"]:
                     tail = f"u{ord(k['char']):04x}"
                 else:
-                    tail = k["id"].split("_")[-1] if "_" in k["id"] else (k["id"] or "kanji")
+                    tail = (
+                        k["id"].split("_")[-1]
+                        if "_" in k["id"]
+                        else (k["id"] or "kanji")
+                    )
                 out_path = os.path.join(args.out, f"{tail}.json")
                 with open(out_path, "w", encoding="utf-8") as w:
-                    json.dump(k, w, ensure_ascii=False, indent=2 if args.pretty else None)
+                    json.dump(
+                        k, w, ensure_ascii=False, indent=2 if args.pretty else None
+                    )
         else:
             all_kanji.extend(kanji_list)
 
@@ -235,7 +257,9 @@ def main():
         if out_dir:
             os.makedirs(out_dir, exist_ok=True)
         with open(args.out, "w", encoding="utf-8") as w:
-            json.dump(all_kanji, w, ensure_ascii=False, indent=2 if args.pretty else None)
+            json.dump(
+                all_kanji, w, ensure_ascii=False, indent=2 if args.pretty else None
+            )
 
 
 if __name__ == "__main__":

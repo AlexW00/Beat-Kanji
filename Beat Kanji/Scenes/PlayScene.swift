@@ -141,7 +141,7 @@ class PlayScene: SKScene {
               gameEngine.currentStrokeIndex < gameEngine.strokeArrivalTimes.count else { return }
         
         let arrivalTime = gameEngine.strokeArrivalTimes[gameEngine.currentStrokeIndex]
-        let windowEnd = arrivalTime + gameEngine.windowAfterArrival
+        let windowEnd = arrivalTime + gameEngine.effectiveWindowAfterArrival()
         
         // If window has closed while user is drawing, force evaluate the partial stroke
         if gameEngine.currentTime > windowEnd {

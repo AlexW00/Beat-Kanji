@@ -307,7 +307,7 @@ class GameEngine {
         // If user is actively drawing, defer the miss check
         if currentStrokeIndex < kanji.strokeCount && currentStrokeIndex < strokeArrivalTimes.count {
             let arrivalTime = strokeArrivalTimes[currentStrokeIndex]
-            let windowEnd = arrivalTime + windowAfterArrival
+            let windowEnd = arrivalTime + effectiveWindowAfterArrival()
             if currentTime > windowEnd && !isUserDrawing {
                 handleMiss()
                 onStrokeMiss?()
@@ -354,7 +354,7 @@ class GameEngine {
     func evaluateStroke(drawnPoints: [CGPoint], targetStroke: Stroke) -> ScoreType {
         let sampleCount = 50
         
-        let drawnStroke = Stroke(id: "drawn", points: drawnPoints.map { [Double($0.x), Double($0.y)] })
+        let drawnStroke = Stroke(id: "drawn", points: drawnPoints.map { [Double($0.x), Double($0.y)] }, lengthClass: .s)
         let resampledDrawn = drawnStroke.resample(count: sampleCount)
         let resampledTarget = targetStroke.resample(count: sampleCount)
         
@@ -476,7 +476,7 @@ class GameEngine {
     }
     
     /// Check if the current stroke's timing window is active
-    /// Drawing is allowed from windowBeforeArrival to windowAfterArrival
+    /// Drawing is allowed from windowBeforeArrival to windowAfterArrival (+ extra time for long strokes)
     /// Returns: (isActive, progress) where progress is 0.0 at window start, 1.0 at window end
     func isStrokeWindowActive() -> (isActive: Bool, progress: Double) {
         guard let kanji = currentKanji,
@@ -487,14 +487,15 @@ class GameEngine {
         
         let arrivalTime = strokeArrivalTimes[currentStrokeIndex]
         let windowStart = arrivalTime - windowBeforeArrival
-        let windowEnd = arrivalTime + windowAfterArrival
+        let effectiveAfter = effectiveWindowAfterArrival()
+        let windowEnd = arrivalTime + effectiveAfter
         
-        // Window is active from windowBeforeArrival to windowAfterArrival
+        // Window is active from windowBeforeArrival to effectiveWindowAfterArrival
         let isActive = currentTime >= windowStart && currentTime <= windowEnd
         
         // Calculate progress: 0.0 at window start, 1.0 at window end
         var progress: Double = 0.0
-        let totalWindowDuration = windowBeforeArrival + windowAfterArrival
+        let totalWindowDuration = windowBeforeArrival + effectiveAfter
         if currentTime >= windowStart && currentTime <= windowEnd {
             progress = (currentTime - windowStart) / totalWindowDuration
         } else if currentTime > windowEnd {
@@ -512,12 +513,48 @@ class GameEngine {
         return windowStart - currentTime
     }
     
+    /// Get the extra drawing time bonus for the current stroke based on its length class.
+    /// Longer strokes get more time to draw.
+    func currentStrokeExtraTime() -> TimeInterval {
+        guard let kanji = currentKanji,
+              currentStrokeIndex < kanji.strokeCount else {
+            return 0.0
+        }
+        let strokes = kanji.strokes
+        guard currentStrokeIndex < strokes.count else { return 0.0 }
+        return strokes[currentStrokeIndex].lengthClass.extraTime
+    }
+    
+    /// Get the effective window end time for the current stroke,
+    /// including the extra time bonus for longer strokes.
+    /// The extra time is capped so that it doesn't exceed the next stroke's arrival time.
+    func effectiveWindowAfterArrival() -> TimeInterval {
+        let extraTime = currentStrokeExtraTime()
+        let baseWindowAfter = windowAfterArrival + extraTime
+        
+        // Cap the window so it doesn't overlap with the next stroke's window
+        // This prevents giving too much time when strokes come in quick succession
+        guard currentStrokeIndex + 1 < strokeArrivalTimes.count else {
+            return baseWindowAfter
+        }
+        
+        let currentArrival = strokeArrivalTimes[currentStrokeIndex]
+        let nextArrival = strokeArrivalTimes[currentStrokeIndex + 1]
+        let nextWindowStart = nextArrival - windowBeforeArrival
+        
+        // Maximum window end is just before the next stroke's window opens (with small buffer)
+        let maxWindowEnd = nextWindowStart - 0.05
+        let maxAfterArrival = max(windowAfterArrival, maxWindowEnd - currentArrival)
+        
+        return min(baseWindowAfter, maxAfterArrival)
+    }
+    
     /// Evaluate a partial (in-progress) stroke when timeout occurs mid-draw
     /// Returns acceptable if >70% complete and roughly on path, otherwise miss
     func evaluatePartialStroke(drawnPoints: [CGPoint], targetStroke: Stroke) -> ScoreType {
         guard drawnPoints.count >= 3 else { return .miss }
         
-        let drawnStroke = Stroke(id: "drawn", points: drawnPoints.map { [Double($0.x), Double($0.y)] })
+        let drawnStroke = Stroke(id: "drawn", points: drawnPoints.map { [Double($0.x), Double($0.y)] }, lengthClass: .s)
         let drawnLength = drawnStroke.length()
         let targetLength = targetStroke.length()
         
@@ -533,7 +570,7 @@ class GameEngine {
         // Get partial target (first N% of the stroke)
         let targetPoints = targetStroke.cgPoints
         let partialTargetPoints = Array(targetPoints.prefix(Int(Double(targetPoints.count) * completionRatio) + 1))
-        let partialTarget = Stroke(id: "partial", points: partialTargetPoints.map { [Double($0.x), Double($0.y)] })
+        let partialTarget = Stroke(id: "partial", points: partialTargetPoints.map { [Double($0.x), Double($0.y)] }, lengthClass: .s)
         let resampledTarget = partialTarget.resample(count: partialSampleCount)
         
         var totalDist: Double = 0

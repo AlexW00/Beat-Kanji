@@ -192,13 +192,16 @@ final class KanjiDataLoader {
         
         let strokeIdCol = Expression<String?>("stroke_id")
         let pointsCol = Expression<Blob>("points")
+        let lengthClassCol = Expression<String>("length_class")
         
         var strokes: [Stroke] = []
         for row in try db.prepare(strokesTable) {
             let blob = row[pointsCol]
             let points = decodePoints(from: blob)
             let strokeId = row[strokeIdCol] ?? "\(kanjiId)-\(strokes.count)"
-            let stroke = Stroke(id: strokeId, points: points)
+            let lengthClassStr = row[lengthClassCol]
+            let lengthClass = StrokeLengthClass(rawValue: lengthClassStr) ?? .s
+            let stroke = Stroke(id: strokeId, points: points, lengthClass: lengthClass)
             strokes.append(stroke)
         }
         return strokes
