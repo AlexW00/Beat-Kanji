@@ -115,57 +115,62 @@ struct LayoutConstants {
     /// Content height for standard categories (Display, About)
     let standardCategoryHeight: CGFloat = 150
 
+    /// Scale stroke widths to match the selected kanji size
+    private var strokeWidthMultiplier: CGFloat {
+        SettingsStore.shared.kanjiSize.strokeWidthMultiplier
+    }
+
     // MARK: - Kanji Stroke Widths
     // iPad uses thicker strokes for better visibility on larger screens
     
     /// Background stroke width (the template stroke to trace)
     var kanjiBackgroundStrokeWidth: CGFloat {
-        isIPad ? 13.0 : 10.0
+        (isIPad ? 13.0 : 10.0) * strokeWidthMultiplier
     }
     
     /// Neon glow outer width for current stroke
     var kanjiGlowWidth: CGFloat {
-        isIPad ? 20.0 : 16.0
+        (isIPad ? 20.0 : 16.0) * strokeWidthMultiplier
     }
     
     /// Neon core width for current stroke
     var kanjiCoreWidth: CGFloat {
-        isIPad ? 6.5 : 5.0
+        (isIPad ? 6.5 : 5.0) * strokeWidthMultiplier
     }
     
     /// Flying stroke background width (base, before depth scaling)
     var flyingStrokeBgWidth: CGFloat {
-        isIPad ? 10.0 : 8.0
+        (isIPad ? 10.0 : 8.0) * strokeWidthMultiplier
     }
     
     /// Flying stroke glow width (base, before depth scaling)
     var flyingStrokeGlowWidth: CGFloat {
-        isIPad ? 17.0 : 14.0
+        (isIPad ? 17.0 : 14.0) * strokeWidthMultiplier
     }
     
     /// Flying stroke core width (base, before depth scaling)
     var flyingStrokeCoreWidth: CGFloat {
-        isIPad ? 5.0 : 4.0
+        (isIPad ? 5.0 : 4.0) * strokeWidthMultiplier
     }
     
     /// Standard stroke glow outer width for flying strokes
     var flyingStrokeGlowOuterWidth: CGFloat {
-        isIPad ? 15.0 : 12.0
+        (isIPad ? 15.0 : 12.0) * strokeWidthMultiplier
     }
     
     /// Standard stroke core width for flying strokes
     var flyingStrokeStandardCoreWidth: CGFloat {
-        isIPad ? 3.75 : 3.0
+        (isIPad ? 3.75 : 3.0) * strokeWidthMultiplier
     }
     
     /// User drawing glow width
     var drawingGlowWidth: CGFloat {
-        isIPad ? 20.0 : 16.0
+        (isIPad ? 20.0 : 16.0) * strokeWidthMultiplier
     }
     
     /// User drawing core width
     var drawingCoreWidth: CGFloat {
-        isIPad ? 6.5 : 5.0
+        (isIPad ? 6.5 : 5.0) * strokeWidthMultiplier
     }
 
     /// Padding from the top edge for tall category headers (Sound)

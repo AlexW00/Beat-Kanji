@@ -83,9 +83,9 @@ enum KanjiSize: String, Codable, CaseIterable {
     /// Returns the kanji scale (as a fraction of screen size) for iPad
     var iPadScale: CGFloat {
         switch self {
-        case .small: return 0.35
-        case .medium: return 0.50
-        case .large: return 0.65
+        case .small: return 0.25
+        case .medium: return 0.40
+        case .large: return 0.50
         }
     }
     
@@ -104,6 +104,15 @@ enum KanjiSize: String, Codable, CaseIterable {
         case .small: return 0.30
         case .medium: return 0.24
         case .large: return 0.18
+        }
+    }
+
+    /// Multiplier for stroke widths; medium is the baseline
+    var strokeWidthMultiplier: CGFloat {
+        switch self {
+        case .small: return 0.80
+        case .medium: return 1.0
+        case .large: return 1.10
         }
     }
 }

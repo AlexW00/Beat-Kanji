@@ -43,7 +43,7 @@
 "settings.ipad.default" = "Default";
 "settings.ipad.applePencil" = "Apple Pencil";
 "settings.category.kanjiSize" = "Kanji Size";
-"settings.kanjiSize.label" = "Choose how large kanji appear.";
+"settings.kanjiSize.label" = "Choose how large kanji appear";
 "settings.kanjiSize.small" = "Small";
 "settings.kanjiSize.medium" = "Medium";
 "settings.kanjiSize.large" = "Large";
