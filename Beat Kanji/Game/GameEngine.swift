@@ -39,6 +39,8 @@ class GameEngine {
     var lives: Int = GameEngine.defaultLives
     var maxLives: Int = GameEngine.defaultLives
     var currentKanji: KanjiEntry?
+    // Cache strokes for current kanji to avoid per-frame DB lookups/locks
+    var currentKanjiStrokes: [Stroke]?
     var currentStrokeIndex: Int = 0
     var kanjiQueue: [KanjiEntry] = []
     
@@ -241,10 +243,12 @@ class GameEngine {
     private func loadNextKanjiFromSequence() {
         guard currentKanjiIndexInSequence < selectedKanjiSequence.count else {
             currentKanji = nil
+            currentKanjiStrokes = nil
             return
         }
         
         currentKanji = selectedKanjiSequence[currentKanjiIndexInSequence]
+        currentKanjiStrokes = currentKanji?.strokes // Cache strokes once
         // debugAssertStrokeCount(currentKanji)
         currentStrokeIndex = 0
         
@@ -321,6 +325,7 @@ class GameEngine {
         if kanjiQueue.isEmpty {
             return
         }
+        currentKanjiStrokes = currentKanji?.strokes // Cache strokes once
         
         currentKanji = kanjiQueue.removeFirst()
         // debugAssertStrokeCount(currentKanji)
@@ -521,8 +526,9 @@ class GameEngine {
               currentStrokeIndex < kanji.strokeCount else {
             return 0.0
         }
-        let strokes = kanji.strokes
-        guard currentStrokeIndex < strokes.count else { return 0.0 }
+        // Use cached strokes to avoid per-frame DB lookup/lock
+        guard let strokes = currentKanjiStrokes,
+              currentStrokeIndex < strokes.count else { return 0.0 }
         return strokes[currentStrokeIndex].lengthClass.extraTime
     }
     

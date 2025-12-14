@@ -151,18 +151,16 @@ extension PlayScene {
         
         if isRainbow {
             // Create rainbow segment nodes for the glow layer
-            // Use filled outlines instead of strokes to avoid join artifacts
+            // Use native stroke rendering (GPU-accelerated, much faster than strokedPath)
             let rainbowColors: [UIColor] = [.red, .orange, .yellow, .green, .cyan, .blue, .magenta]
             for (idx, color) in rainbowColors.enumerated() {
                 let segmentGlow = SKShapeNode()
                 segmentGlow.name = "rainbowGlow_\(idx)"
-                // Store the original color for later use when converting to filled path
                 segmentGlow.strokeColor = color
-                segmentGlow.fillColor = color.withAlphaComponent(0.7)
-                segmentGlow.lineWidth = 0  // Will use filled outline
+                segmentGlow.fillColor = .clear
                 segmentGlow.lineCap = .round
                 segmentGlow.lineJoin = .round
-                segmentGlow.glowWidth = 0  // No glowWidth - avoid gaps
+                segmentGlow.glowWidth = 0
                 segmentGlow.blendMode = .add
                 segmentGlow.alpha = 1.0
                 segmentGlow.zPosition = 0
@@ -172,7 +170,7 @@ extension PlayScene {
                 let segmentBg = SKShapeNode()
                 segmentBg.name = "rainbowBg_\(idx)"
                 segmentBg.strokeColor = color
-                segmentBg.lineWidth = LayoutConstants.shared.flyingStrokeBgWidth
+                segmentBg.fillColor = .clear
                 segmentBg.lineCap = .round
                 segmentBg.lineJoin = .round
                 segmentBg.glowWidth = 0.0
@@ -184,28 +182,29 @@ extension PlayScene {
             fillContainer.userData = NSMutableDictionary()
             fillContainer.userData?["rainbowPhase"] = 0.0
         } else {
-            // Standard glow node - use filled outline approach for vibrant neon
+            // Standard glow node - use native SKShapeNode stroke rendering (not filled outline)
+            // This is much faster as it uses GPU-accelerated stroke rendering
             let fillGlow = SKShapeNode()
             fillGlow.name = "glow"
-            // Store the color in strokeColor for reference, but render as fill
             fillGlow.strokeColor = strokeColor
-            fillGlow.fillColor = strokeColor.withAlphaComponent(0.85)  // Bright vibrant glow
-            fillGlow.lineWidth = 0  // Will use filled outline
+            fillGlow.fillColor = .clear
             fillGlow.lineCap = .round
             fillGlow.lineJoin = .round
-            fillGlow.glowWidth = 0.0  // No glowWidth - avoid gaps
-            fillGlow.blendMode = .add  // Additive for neon glow effect
+            fillGlow.glowWidth = 0.0
+            fillGlow.blendMode = .add
             fillGlow.alpha = 1.0
             fillGlow.zPosition = 0
+            // Store the glow color in userData for retrieval during update
+            fillGlow.userData = NSMutableDictionary()
+            fillGlow.userData?["glowColor"] = strokeColor
             fillContainer.addChild(fillGlow)
         }
         
-        // Core Node (white center) - use filled outline approach
+        // Core Node (white center) - use native stroke rendering
         let fillCore = SKShapeNode()
         fillCore.name = "core"
         fillCore.strokeColor = .white
-        fillCore.fillColor = .white
-        fillCore.lineWidth = 0  // Will use filled outline
+        fillCore.fillColor = .clear
         fillCore.lineCap = .round
         fillCore.lineJoin = .round
         fillCore.glowWidth = 0.0
@@ -260,6 +259,9 @@ extension PlayScene {
     
     func updateFlyingStrokes() {
         let screenCenter = CGPoint(x: size.width/2, y: size.height/2)
+        
+        // Cache layout constants once per frame (avoid repeated property access)
+        let layout = LayoutConstants.shared
         
         for i in (0..<flyingStrokes.count).reversed() {
             var flying = flyingStrokes[i]
@@ -363,10 +365,9 @@ extension PlayScene {
                 }
                 
                 let depthScale = 1.0 / (1.0 + flying.depth * perspectiveFactor)
-                let flyingLayout = LayoutConstants.shared
-                let glowWidth = flyingLayout.flyingStrokeGlowWidth * depthScale
-                let bgWidth = flyingLayout.flyingStrokeBgWidth * depthScale
-                let coreWidth = flyingLayout.flyingStrokeCoreWidth * depthScale
+                let glowWidth = layout.flyingStrokeGlowWidth * depthScale
+                let bgWidth = layout.flyingStrokeBgWidth * depthScale
+                let coreWidth = layout.flyingStrokeCoreWidth * depthScale
                 
                 // Create paths for each rainbow color segment
                 for colorIdx in 0..<numColors {
@@ -385,60 +386,107 @@ extension PlayScene {
                         fillPercent: fillPercent
                     )
                     
-                    // Update glow nodes - use filled outlines for seamless appearance
+                    // Update glow nodes - use filled outline to avoid cuts
                     if let glowNode = flying.fillNode.childNode(withName: "rainbowGlow_\(colorIdx)") as? SKShapeNode {
-                        // Convert to filled outline to avoid join artifacts
-                        glowNode.path = strokedPath(from: paths.fillPath, width: glowWidth)
+                        let glowFilledPath = paths.fillPath.copy(
+                            strokingWithWidth: glowWidth,
+                            lineCap: .round,
+                            lineJoin: .round,
+                            miterLimit: 4,
+                            transform: .identity
+                        )
+                        glowNode.path = glowFilledPath
+                        glowNode.fillColor = rainbowColors[colorIdx].withAlphaComponent(0.7)
                         glowNode.strokeColor = .clear
                         glowNode.lineWidth = 0
-                        glowNode.glowWidth = 0  // No glowWidth - key to avoiding gaps
+                        glowNode.glowWidth = 0
+                        glowNode.blendMode = .add
                     }
                     
-                    // Update background nodes
+                    // Update background nodes - use filled outline to avoid cuts
                     if let bgNode = flying.bgNode.childNode(withName: "rainbowBg_\(colorIdx)") as? SKShapeNode {
-                        bgNode.path = paths.bgPath
-                        bgNode.lineWidth = bgWidth
+                        let bgFilledPath = paths.bgPath.copy(
+                            strokingWithWidth: bgWidth,
+                            lineCap: .round,
+                            lineJoin: .round,
+                            miterLimit: 4,
+                            transform: .identity
+                        )
+                        bgNode.path = bgFilledPath
+                        bgNode.fillColor = rainbowColors[colorIdx].withAlphaComponent(0.25)
+                        bgNode.strokeColor = .clear
+                        bgNode.lineWidth = 0
                         bgNode.glowWidth = 0
                     }
                 }
                 
-                // Update the core (white center) - use filled outline
+                // Update the core (white center) - use filled outline to avoid cuts
                 if let coreNode = flying.fillNode.childNode(withName: "core") as? SKShapeNode {
-                    coreNode.path = strokedPath(from: fillPath, width: coreWidth)
+                    let coreFilledPath = fillPath.copy(
+                        strokingWithWidth: coreWidth,
+                        lineCap: .round,
+                        lineJoin: .round,
+                        miterLimit: 4,
+                        transform: .identity
+                    )
+                    coreNode.path = coreFilledPath
+                    coreNode.fillColor = UIColor.white.withAlphaComponent(0.9)
                     coreNode.strokeColor = .clear
                     coreNode.lineWidth = 0
                     coreNode.glowWidth = 0
                 }
             } else {
-                // Standard stroke - use native SKShapeNode stroke rendering (avoids expensive strokedPath calls)
+                // Standard stroke - use filled outline rendering to avoid cuts/gaps
+                // This matches the static kanji stroke rendering algorithm
                 let depthScale = 1.0 / (1.0 + flying.depth * perspectiveFactor)
-                let stdLayout = LayoutConstants.shared
-                let bgWidth = stdLayout.flyingStrokeBgWidth * depthScale
-                let glowOuterWidth = stdLayout.flyingStrokeGlowOuterWidth * depthScale
-                let coreWidth = stdLayout.flyingStrokeStandardCoreWidth * depthScale
+                let bgWidth = layout.flyingStrokeBgWidth * depthScale
+                let glowOuterWidth = layout.flyingStrokeGlowOuterWidth * depthScale
+                let coreWidth = layout.flyingStrokeStandardCoreWidth * depthScale
                 
-                // Background stroke - use native stroke rendering
-                flying.bgNode.path = fullPath
-                flying.bgNode.fillColor = .clear
-                flying.bgNode.lineWidth = bgWidth
-                flying.bgNode.lineCap = .round
-                flying.bgNode.lineJoin = .round
+                // Background stroke - use filled outline to avoid cuts
+                let bgFilledPath = fullPath.copy(
+                    strokingWithWidth: bgWidth,
+                    lineCap: .round,
+                    lineJoin: .round,
+                    miterLimit: 4,
+                    transform: .identity
+                )
+                flying.bgNode.path = bgFilledPath
+                flying.bgNode.fillColor = flying.bgNode.strokeColor.withAlphaComponent(0.25)
+                flying.bgNode.strokeColor = .clear
+                flying.bgNode.lineWidth = 0
                 flying.bgNode.glowWidth = 0
                 
+                // Fill strokes - use filled outline rendering to match static kanji strokes
                 for child in flying.fillNode.children {
                     guard let shape = child as? SKShapeNode else { continue }
                     if shape.name == "glow" {
-                        // Use filled outline for seamless vibrant glow
-                        shape.path = strokedPath(from: fillPath, width: glowOuterWidth)
-                        shape.fillColor = shape.strokeColor.withAlphaComponent(0.5)  // Visible glow
+                        // Filled outline for glow - eliminates cuts
+                        let glowFilledPath = fillPath.copy(
+                            strokingWithWidth: glowOuterWidth,
+                            lineCap: .round,
+                            lineJoin: .round,
+                            miterLimit: 4,
+                            transform: .identity
+                        )
+                        shape.path = glowFilledPath
+                        let glowColor = shape.userData?["glowColor"] as? SKColor ?? .cyan
+                        shape.fillColor = glowColor.withAlphaComponent(0.7)
                         shape.strokeColor = .clear
                         shape.lineWidth = 0
-                        shape.glowWidth = 0  // No glowWidth - key to avoiding gaps
-                        shape.blendMode = .add  // Additive for neon glow effect
+                        shape.glowWidth = 0
+                        shape.blendMode = .add
                     } else if shape.name == "core" {
-                        // Use filled outline for core too - avoids join artifacts
-                        shape.path = strokedPath(from: fillPath, width: coreWidth)
-                        shape.fillColor = .white
+                        // Filled outline for core - eliminates cuts
+                        let coreFilledPath = fillPath.copy(
+                            strokingWithWidth: coreWidth,
+                            lineCap: .round,
+                            lineJoin: .round,
+                            miterLimit: 4,
+                            transform: .identity
+                        )
+                        shape.path = coreFilledPath
+                        shape.fillColor = UIColor.white.withAlphaComponent(0.9)
                         shape.strokeColor = .clear
                         shape.lineWidth = 0
                         shape.glowWidth = 0
@@ -447,11 +495,11 @@ extension PlayScene {
                 }
             }
             
-            // Fade in/out
+            // Fade in/out based on depth
             let alpha = max(0.0, min(1.0, 1.0 - (flying.depth / spawnDepth)))
             let lookAheadMultiplier: CGFloat = flying.isNextKanji ? 0.6 : 1.0
-            flying.bgNode.alpha = alpha * 0.3 * lookAheadMultiplier
-            flying.fillNode.alpha = alpha * 1.0 * lookAheadMultiplier
+            flying.bgNode.alpha = alpha * 0.2 * lookAheadMultiplier
+            flying.fillNode.alpha = alpha * 0.85 * lookAheadMultiplier
             
             flyingStrokes[i] = flying
         }
@@ -570,43 +618,28 @@ extension PlayScene {
     
     // MARK: - Optimized Path Building Helpers
     
-    /// Build a simple CGPath from an array of points (no Catmull-Rom smoothing per-frame)
-    /// Uses quadratic curves for acceptable smoothness with much lower CPU cost
+    /// Build a smooth CGPath from an array of points using Catmull-Rom splines
+    /// This matches the algorithm used for static kanji strokes, eliminating cuts/gaps
     private func buildSimplePath(from points: [CGPoint]) -> CGPath {
-        let path = CGMutablePath()
-        guard points.count >= 2 else {
-            if let first = points.first {
-                path.move(to: first)
-            }
-            return path
-        }
-        
-        path.move(to: points[0])
-        
-        // Use simple line segments (the deduplication at spawn keeps point count low)
-        // This avoids the expensive Catmull-Rom spline calculation every frame
-        for i in 1..<points.count {
-            path.addLine(to: points[i])
-        }
-        
-        return path
+        // Use the same Catmull-Rom smoothing as static kanji strokes
+        return NeonStrokeFactory.smoothPath(from: points, tension: 0.5)
     }
     
-    /// Build a partial path for fill animation based on fill percentage
-    /// Uses cached segment lengths to avoid recalculation
+    /// Build a smooth partial path for fill animation based on fill percentage
+    /// Uses Catmull-Rom splines matching the static kanji stroke algorithm
     private func buildPartialPath(
         projectedPoints: [CGPoint],
         segmentLengths: [Double],
         fillPercent: Double,
         totalLength: Double
     ) -> CGPath {
-        let path = CGMutablePath()
-        guard !projectedPoints.isEmpty, totalLength > 0 else { return path }
+        guard !projectedPoints.isEmpty, totalLength > 0 else { return CGMutablePath() }
         
         let targetLen = totalLength * fillPercent
         var currentLen: Double = 0
         
-        path.move(to: projectedPoints[0])
+        // Build points up to the fill target
+        var pathPoints: [CGPoint] = [projectedPoints[0]]
         
         for i in 0..<segmentLengths.count {
             let segLen = segmentLengths[i]
@@ -616,8 +649,8 @@ extension PlayScene {
             }
             
             if currentLen + segLen <= targetLen {
-                // Add full segment
-                path.addLine(to: projectedPoints[i + 1])
+                // Add full segment endpoint
+                pathPoints.append(projectedPoints[i + 1])
             } else {
                 // Add partial segment - interpolate the endpoint
                 let remaining = targetLen - currentLen
@@ -628,13 +661,14 @@ extension PlayScene {
                     x: p1.x + (p2.x - p1.x) * t,
                     y: p1.y + (p2.y - p1.y) * t
                 )
-                path.addLine(to: partialPt)
+                pathPoints.append(partialPt)
                 break
             }
             currentLen += segLen
         }
         
-        return path
+        // Use Catmull-Rom smoothing to match static kanji strokes
+        return NeonStrokeFactory.smoothPath(from: pathPoints, tension: 0.5)
     }
     
     private func project(point: CGPoint, depth: CGFloat, center: CGPoint) -> CGPoint {

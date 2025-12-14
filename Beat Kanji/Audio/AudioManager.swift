@@ -43,6 +43,11 @@ class AudioManager {
     // Cache for preloaded UI sounds
     private var uiSoundCache: [String: URL] = [:]
     
+    // Smoothed time tracking to avoid expensive AVAudioPlayer.currentTime calls every frame
+    private var lastAudioTime: TimeInterval = 0
+    private var lastSystemTime: TimeInterval = 0
+    private let timeSyncInterval: TimeInterval = 0.05 // Sync every 50ms (approx 3 frames at 60fps)
+    
     private init() {
         preloadUISounds()
     }
@@ -71,8 +76,23 @@ class AudioManager {
     }
     
     /// Get the current playback time of the music
+    /// Uses smoothed interpolation to avoid main thread blocking from frequent AVAudioPlayer calls
     var currentTime: TimeInterval {
-        return player?.currentTime ?? 0
+        guard let player = player, player.isPlaying else {
+            return player?.currentTime ?? 0
+        }
+        
+        let now = ProcessInfo.processInfo.systemUptime
+        // Resync if interval passed or if system time jumped backwards (rare but possible)
+        if now - lastSystemTime > timeSyncInterval || now < lastSystemTime {
+            lastAudioTime = player.currentTime
+            lastSystemTime = now
+            return lastAudioTime
+        }
+        
+        // Interpolate: last known audio time + elapsed system time
+        // Assuming rate is 1.0, which is true for this game
+        return lastAudioTime + (now - lastSystemTime)
     }
     
     /// Get the duration of the currently loaded song (0 if unavailable)
@@ -83,6 +103,10 @@ class AudioManager {
     /// Check if music is currently playing
     var isPlaying: Bool {
         return player?.isPlaying ?? false
+    }
+    
+    private func resetSmoothedTime() {
+        lastSystemTime = 0 // Force resync on next read
     }
     
     func playDebugMusic() {
@@ -108,6 +132,7 @@ class AudioManager {
             player?.numberOfLoops = 0 // Play once (song has a defined length)
             player?.volume = musicVolume
             player?.play()
+            resetSmoothedTime()
             print("Playing music: \(baseName).\(primaryExtension)")
         } catch {
             print("Error playing music: \(error)")
@@ -122,6 +147,7 @@ class AudioManager {
         guard let player = player else { return }
         if !player.isPlaying {
             player.play()
+            resetSmoothedTime()
         }
     }
     
@@ -132,6 +158,7 @@ class AudioManager {
     /// Seek to a specific time in the music
     func seek(to time: TimeInterval) {
         player?.currentTime = time
+        resetSmoothedTime()
     }
     
     // MARK: - Menu Music

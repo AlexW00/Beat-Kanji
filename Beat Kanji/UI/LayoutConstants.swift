@@ -115,63 +115,39 @@ struct LayoutConstants {
     /// Content height for standard categories (Display, About)
     let standardCategoryHeight: CGFloat = 150
 
-    /// Scale stroke widths to match the selected kanji size
-    private var strokeWidthMultiplier: CGFloat {
-        SettingsStore.shared.kanjiSize.strokeWidthMultiplier
-    }
-
-    // MARK: - Kanji Stroke Widths
+    // MARK: - Kanji Stroke Widths (cached at init to avoid per-frame SettingsStore access)
     // iPad uses thicker strokes for better visibility on larger screens
+    // These are cached at configure() time to prevent periodic lag from UserDefaults sync
     
     /// Background stroke width (the template stroke to trace)
-    var kanjiBackgroundStrokeWidth: CGFloat {
-        (isIPad ? 13.0 : 10.0) * strokeWidthMultiplier
-    }
+    let kanjiBackgroundStrokeWidth: CGFloat
     
     /// Neon glow outer width for current stroke
-    var kanjiGlowWidth: CGFloat {
-        (isIPad ? 20.0 : 16.0) * strokeWidthMultiplier
-    }
+    let kanjiGlowWidth: CGFloat
     
     /// Neon core width for current stroke
-    var kanjiCoreWidth: CGFloat {
-        (isIPad ? 6.5 : 5.0) * strokeWidthMultiplier
-    }
+    let kanjiCoreWidth: CGFloat
     
     /// Flying stroke background width (base, before depth scaling)
-    var flyingStrokeBgWidth: CGFloat {
-        (isIPad ? 10.0 : 8.0) * strokeWidthMultiplier
-    }
+    let flyingStrokeBgWidth: CGFloat
     
     /// Flying stroke glow width (base, before depth scaling)
-    var flyingStrokeGlowWidth: CGFloat {
-        (isIPad ? 17.0 : 14.0) * strokeWidthMultiplier
-    }
+    let flyingStrokeGlowWidth: CGFloat
     
     /// Flying stroke core width (base, before depth scaling)
-    var flyingStrokeCoreWidth: CGFloat {
-        (isIPad ? 5.0 : 4.0) * strokeWidthMultiplier
-    }
+    let flyingStrokeCoreWidth: CGFloat
     
     /// Standard stroke glow outer width for flying strokes
-    var flyingStrokeGlowOuterWidth: CGFloat {
-        (isIPad ? 15.0 : 12.0) * strokeWidthMultiplier
-    }
+    let flyingStrokeGlowOuterWidth: CGFloat
     
     /// Standard stroke core width for flying strokes
-    var flyingStrokeStandardCoreWidth: CGFloat {
-        (isIPad ? 3.75 : 3.0) * strokeWidthMultiplier
-    }
+    let flyingStrokeStandardCoreWidth: CGFloat
     
     /// User drawing glow width
-    var drawingGlowWidth: CGFloat {
-        (isIPad ? 20.0 : 16.0) * strokeWidthMultiplier
-    }
+    let drawingGlowWidth: CGFloat
     
     /// User drawing core width
-    var drawingCoreWidth: CGFloat {
-        (isIPad ? 6.5 : 5.0) * strokeWidthMultiplier
-    }
+    let drawingCoreWidth: CGFloat
 
     /// Padding from the top edge for tall category headers (Sound)
     let tallCategoryHeaderTopPadding: CGFloat = 30
@@ -230,6 +206,20 @@ struct LayoutConstants {
         // Clip insets - fixed values that work for both devices
         self.menuClipTopInset = 170
         self.menuClipBottomInset = 150
+        
+        // Cache stroke widths at init time to avoid per-frame SettingsStore access
+        // This prevents periodic lag from iOS UserDefaults synchronization
+        let strokeMultiplier = SettingsStore.shared.kanjiSize.strokeWidthMultiplier
+        self.kanjiBackgroundStrokeWidth = (isIPad ? 13.0 : 10.0) * strokeMultiplier
+        self.kanjiGlowWidth = (isIPad ? 20.0 : 16.0) * strokeMultiplier
+        self.kanjiCoreWidth = (isIPad ? 6.5 : 5.0) * strokeMultiplier
+        self.flyingStrokeBgWidth = (isIPad ? 10.0 : 8.0) * strokeMultiplier
+        self.flyingStrokeGlowWidth = (isIPad ? 17.0 : 14.0) * strokeMultiplier
+        self.flyingStrokeCoreWidth = (isIPad ? 5.0 : 4.0) * strokeMultiplier
+        self.flyingStrokeGlowOuterWidth = (isIPad ? 15.0 : 12.0) * strokeMultiplier
+        self.flyingStrokeStandardCoreWidth = (isIPad ? 3.75 : 3.0) * strokeMultiplier
+        self.drawingGlowWidth = (isIPad ? 20.0 : 16.0) * strokeMultiplier
+        self.drawingCoreWidth = (isIPad ? 6.5 : 5.0) * strokeMultiplier
     }
     
     // MARK: - Helper Methods
