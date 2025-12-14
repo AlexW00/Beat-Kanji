@@ -36,6 +36,20 @@ KVG_NS = {"kvg": "http://kanjivg.tagaini.net"}  # KanjiVG namespace
 HEX_RE = re.compile(r"([0-9a-fA-F]{4,6})")
 
 
+def calculate_stroke_length(d: str) -> float:
+    """
+    Calculate the arc length of an SVG path `d`.
+    Uses svgpathtools to compute the total length of the path.
+    """
+    try:
+        p = parse_path(d)
+        if len(p) == 0:
+            return 0.0
+        return p.length()
+    except Exception:
+        return 0.0
+
+
 def sample_svg_path(d: str, samples: int) -> list[list[float]]:
     """
     Sample an SVG path `d` into a polyline with `samples` points.
@@ -129,11 +143,18 @@ def extract_kanji_from_tree(
                 continue
             stroke_id = path_node.attrib.get("id", "")
             points = sample_svg_path(d, samples)
+            # Calculate stroke length (in original coordinates)
+            raw_length = calculate_stroke_length(d)
+            # Normalize length the same way as coordinates if requested
+            stroke_length = raw_length / size if do_normalize and size > 0 else raw_length
+            # Round to 2 decimal places to avoid long floating representations
+            stroke_length = round(float(stroke_length), 2)
             if do_normalize:
                 points = normalize_points(points, size)
             strokes_json.append({
                 "id": stroke_id,
-                "points": points
+                "points": points,
+                "length": stroke_length
             })
 
         results.append({

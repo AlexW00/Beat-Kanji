@@ -165,6 +165,7 @@ def write_sqlite(entries: List[dict], out_path: Path, verbose: bool) -> None:
             stroke_index INTEGER NOT NULL,
             stroke_id TEXT,
             points BLOB NOT NULL,
+            length REAL NOT NULL DEFAULT 0.0,
             PRIMARY KEY(kanji_id, stroke_index)
         );
         CREATE INDEX idx_kanji_tags_tag ON kanji_tags(tag);
@@ -190,9 +191,10 @@ def write_sqlite(entries: List[dict], out_path: Path, verbose: bool) -> None:
         for idx, stroke in enumerate(strokes):
             points = stroke.get("points") or []
             stroke_id = stroke.get("id")
+            stroke_length = stroke.get("length") or 0.0
             blob = pack_points(points)
             stroke_rows.append(
-                (kanji_id, idx, stroke_id, sqlite3.Binary(blob))
+                (kanji_id, idx, stroke_id, sqlite3.Binary(blob), stroke_length)
             )
 
     cur.executemany(
@@ -204,7 +206,7 @@ def write_sqlite(entries: List[dict], out_path: Path, verbose: bool) -> None:
         tag_rows,
     )
     cur.executemany(
-        "INSERT INTO strokes(kanji_id, stroke_index, stroke_id, points) VALUES (?, ?, ?, ?)",
+        "INSERT INTO strokes(kanji_id, stroke_index, stroke_id, points, length) VALUES (?, ?, ?, ?, ?)",
         stroke_rows,
     )
 
