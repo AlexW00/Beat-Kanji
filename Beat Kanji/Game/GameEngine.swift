@@ -101,7 +101,7 @@ class GameEngine {
     // This gives players a brief moment to prepare for the next kanji
     // Same gap for all display modes to maintain consistent gameplay rhythm
     var gapBetweenKanjiMs: Double {
-        return 800.0 // 0.8 seconds gap - same for all modes
+        return 1500.0 // 1.5 seconds gap to give players breathing room between kanji
     }
     
     /// Start game with beatmap integration
@@ -177,9 +177,10 @@ class GameEngine {
                 if let lastNoteTime = kanjiNotes.last?.time, !availableNotes.isEmpty {
                     let gapEndTime = lastNoteTime + gapSeconds
                     
-                    // Remove notes that fall within the gap period
-                    let removedCount = availableNotes.filter { $0.time < gapEndTime }.count
-                    availableNotes.removeAll { $0.time < gapEndTime }
+                    // Remove notes that fall within the gap period (inclusive) so the first
+                    // stroke of the next kanji never appears too soon after the previous one
+                    let removedCount = availableNotes.filter { $0.time <= gapEndTime }.count
+                    availableNotes.removeAll { $0.time <= gapEndTime }
                     
                     if removedCount > 0 {
                         print("Removed \(removedCount) notes within gap period after kanji '\(kanji.char)'")
